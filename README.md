@@ -10,7 +10,7 @@ Transforming Chromium to Chrome
 ## Getting the right IMG for YOUR pc
 
 First, download the right recovery img here: chrome.qwedl.com (choose the one with the closest specs of your system)
-You can use THIS LIST to search for your processor, and then search on the internet for which one is the best
+You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then search on the internet for which one is the best
  
 After finishing installing a Chromium OS, open the browser and press CTRL+ALT+T to open chroot
 Type:
