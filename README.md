@@ -74,9 +74,12 @@ The user is chronos
 
 Type "sudo su"
 Then type the following commands
-> mount /dev/sda5 /home/chronos/local
-> cp -rf /lib/firmware /home/chronos/local/lib
-> Press hold Ctrl + Alt + F1 
+```sh
+mount /dev/sda5 /home/chronos/local
+cp -rf /lib/firmware /home/chronos/local/lib
+```
+
+Press hold Ctrl + Alt + F1 
 
 Now restart your computer. When the screen with the boot options appear (the grub), press 'e' FAST (or it will boot into the chromium). You will have to change the root for:
 root=/dev/sda5
