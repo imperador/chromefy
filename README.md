@@ -67,3 +67,10 @@ Now press F10. If it boots coorectly, you are ready to go
 ## Updating the System 
 
 Working on this
+
+# Credits:
+[allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
+Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc)
+++ some more that I will add soon
+
+## Updating the System 
