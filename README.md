@@ -86,7 +86,7 @@ root=/dev/sda5
 
 Now press F10.
 
-## Updating ChromeOS VIA Chromium Native
+## Updating ChromeOS VIA Chromium Native: The Setup
 Do not restart out of ChromeOS yet, first go to chrome.qwedl.com and choose the updated recovery image for the device you chose during installation. Download it
 
 Mount the zip file you downloaded, and copy the recovery.bin into your downloads. Rename it to chromeos.bin
@@ -108,7 +108,7 @@ mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
 Now look in losetup to find the loop device that cooresponds with your Chromium image. Type:
 mount /dev/loop{number}p3 /home/chronos/chromium -o loop,ro
 
-## Updating both ChromeOS and Chromium Native:
+## Updating both ChromeOS and Chromium Native: The actual upgrade
 Remember, the commands outlined here must be done in EXACTLY this order to guarantee everything goes smoothly. IF you don't do this and find neither the touchscreen, trackpad, or keyboard works, that's on you. Not me, or anyone else.
 
 rm -rf /home/chronos/local
