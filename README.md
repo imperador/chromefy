@@ -62,7 +62,7 @@ root=/dev/sda5
 
 Now press F10. If it boots coorectly, you are ready to go
  
-# ADITIONAL (not necessary if your wi-fi already works):
+# ADITIONAL:
 
 ## Updating the System 
 
