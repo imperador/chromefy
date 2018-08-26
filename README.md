@@ -98,8 +98,9 @@ rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/
 cp -av /lib/firmware /home/chronos/local/lib/
 cp -av /lib/modules/ /home/chronos/local/lib/modules/
-rm -rf /home/chronos/local/etc/modprobe/alsa-.conf (Alsa-* being whatever the config name is, in my case it would be Alsa-skl.conf)
+rm -rf /home/chronos/local/etc/modprobe/alsa-.conf
 ```
+(Alsa-* being whatever the config name is, in my case it would be Alsa-skl.conf)
 
 Change in /home/chronos/local/etc/selinux/config the word enforcing to permissive with the following command:
 ```sh
@@ -119,8 +120,8 @@ Now that both ChromeOS and CHromium Native are updated, type in "sync", hit ente
 
 
 ## Credits:
-[allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
-[TCU14](github.com/TCU14) for the upgrade part
-Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
-Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration
-++ some more that I will add soon
+  - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
+  - [TCU14](github.com/TCU14) for the upgrade part
+  - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
+  - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration
+  - ++ some more that I will add soon
