@@ -19,10 +19,10 @@ shell
 sudo su
 ```
 
-Installing Chrome OS:
-Observation 1: If the file is in Downloads folder, {path}=home/chronos/user/Downloads, so use the path accordingly with your file location
-Observation 2: change "chromeos_10575.58.0_caroline_recovery_stable-channel_mp.bin" to the name of YOUR recovery img.
-Observation 1: Any password or username will be 'chronos'
+Installing Chrome OS (some notes):
+  - If the file is in Downloads folder, {path}=home/chronos/user/Downloads, so use the path accordingly with your file location
+  - Change "chromeos_10575.58.0_caroline_recovery_stable-channel_mp.bin" to the name of YOUR recovery img.
+  - Any password or username will be 'chronos'
 
 ## Configuring the new Chrome partition
 
@@ -52,7 +52,9 @@ rm -rf /home/chronos/local/etc/modprobe/alsa-skl.conf
 ```
 
 Change in /home/chronos/local/etc/selinux/config the word enforcing to permissive with the following command:
+```sh
 sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config
+```
 Type "sync" and press Enter
 
 Now restart your computer. When the screen with the boot options appear (the grub), press 'e' FAST (or it will boot into the chromium). You will have to change the root for:
@@ -62,30 +64,6 @@ Now press F10. If it boots coorectly, you are ready to go
  
 # ADITIONAL (not necessary if your wi-fi already works):
 
-## Fixing the Wi-fi 
+## Updating the System 
 
-If your wi-fi doesn't work, just do the following :
-Restart your computer. When the screen with the boot options appear (the grub), press 'e' FAST (or it will boot into the chromium). You will have to change the root for the following (remember, if you have nvem0n1, it will be nvem0n1p3 on the place of sda3, or sdb3 if your drive is sdb):
-root=/dev/sda3
-
-On the login screen, press Ctrl + Alt + F2 to open the shell.
-
-The user is chronos
-
-Type "sudo su"
-Then type the following commands
-```sh
-mount /dev/sda5 /home/chronos/local
-cp -rf /lib/firmware /home/chronos/local/lib
-```
-
-Press hold Ctrl + Alt + F1 
-
-Now restart your computer. When the screen with the boot options appear (the grub), press 'e' FAST (or it will boot into the chromium). You will have to change the root for:
-root=/dev/sda5
-
-Now press F10.
-
-
-
-
+Working on this
