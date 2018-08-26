@@ -1,6 +1,9 @@
 # chromefy
 Transforming Chromium to Chrome
 
+You can find us in the Telegram Group:
+https://t.me/chromeosforpc
+
 ## Observations
 
   - You NEED Chromium installation running 
@@ -122,6 +125,9 @@ cp -av /home/chronos/local/lib/modules /home/chronos/native/lib/modules
 ```
 Now that both ChromeOS and CHromium Native are updated, type in "sync", hit enter, and than once you regain the ability to type a command in the terminal reboot your system, and boot into your now upgraded ChromeOS machine. It is important that you use this method, as updating ChromeOS via the update function built in will not work properly, and will try to update the 3rd partition, which is Chromium native. ChromeOS cannot be booted at this point. It is best to follow the instructions outlined here when updating.
 
+
+## Automated script to make all the process
+Working in this
 
 ## Credits:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
