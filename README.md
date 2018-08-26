@@ -81,12 +81,16 @@ losetup -fP /home/chronos/user/Downloads/chromeos.bin
 losetup -fP /home/chronos/user/Downloads/Chromium.img
 mount /dev/sda5 /home/chronos/local
 mount /dev/sda3 /home/chronos/native
+```
 Now type losetup to get a list of Loop devices, find the one that cooresponds to your ChromeOS Image and than type:
+```sh
 mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
 ```
 
 Now look in losetup to find the loop device that cooresponds with your Chromium image. Type:
+```sh
 mount /dev/loop{number}p3 /home/chronos/chromium -o loop,ro
+```
 
 ## Updating both ChromeOS and Chromium Native: The actual upgrade
 Remember, the commands outlined here must be done in EXACTLY this order to guarantee everything goes smoothly. IF you don't do this and find neither the touchscreen, trackpad, or keyboard works, that's on you. Not me, or anyone else.
