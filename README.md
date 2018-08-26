@@ -74,5 +74,3 @@ Working on this
 Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc)
 
 ++ some more that I will add soon
-
-## Updating the System 
