@@ -67,18 +67,14 @@ Now press F10. If it boots coorectly, you are ready to go
  
 # ADITIONAL:
 
-## Updating ChromeOS VIA Chromium Native: The Setup
-Do not restart out of ChromeOS yet, first go to chrome.qwedl.com and choose the updated recovery image for the device you chose during installation. Download it
+## Updating ChromeOS and Chromium Native: The Setup
+You will need a Live USB of any Linux distribution. I recommend Mint or Ubuntu.
 
-Mount the zip file you downloaded, and copy the recovery.bin into your downloads. Rename it to chromeos.bin
+Find and download the updated recovery image for the device you used at chrome.qwedl.com
 
-Go to ArnoldTheBats and find the latest daily build, download it.install wicked good archiver and reboot. Boot back into ChromeOS and double click the 7z file you downloaded, and copy the Chromium image to your downloads. rename it to Chromium.img
+Go to ArnoldTheBats and find the latest daily build, download it. Extract the 7z file, and copy the Chromium image to your downloads. rename it to Chromium.img
 
-Reboot again, now that you have downloaded everything you need, and hit e when the grub menu appears. This time, make sure root=/dev/^3, ^ being dependent on the partition system. In my case, it would be /dev/sda3
-
-hit F10 to boot using the current grub configuration, and you will find yourself being greeted by ChromiumOS. Once it boots do not attempt to log in, it will fail. Those accounts are forever ChromeOS accounts unless you reinstalled Chromium. Instead, do Ctrl Alt F2 to open the terminal, and log in as chronos. Do "udo su" to ensure you have root access
-
-Now type in the following commands: 
+Now type in the following commands in the Linux terminal:
 ```sh
 losetup -fP /home/chronos/user/Downloads/chromeos.bin
 losetup -fP /home/chronos/user/Downloads/Chromium.img
@@ -103,8 +99,8 @@ rm -rf /home/chronos/local
 cp -av /home/chronos/image/* /home/chronos/local
 rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/
-cp -av /lib/firmware /home/chronos/local/lib/
-cp -av /lib/modules/ /home/chronos/local/lib/modules/
+cp -av /home/chronos/native/lib/firmware /home/chronos/local/lib/
+cp -av /home/chronos/native/lib/modules/ /home/chronos/local/lib/modules/
 rm -rf /home/chronos/local/etc/modprobe/alsa-.conf
 ```
 (Alsa-* being whatever the config name is, in my case it would be Alsa-skl.conf)
@@ -114,7 +110,7 @@ Change in /home/chronos/local/etc/selinux/config the word enforcing to permissiv
 sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config
 ```
 
-Now to update Chromium Native, 
+ [Optional] Now to update Chromium Native
 ```sh
 rm -rf /home/chronos/native
 cp -av /home/chronos/chromium/* /home/chronos/native
@@ -123,8 +119,9 @@ rm -rf /home/chronos/native/lib/modules/
 cp -av /home/chronos/local/firmware /home/chronos/native/lib/
 cp -av /home/chronos/local/lib/modules /home/chronos/native/lib/modules
 ```
-Now that both ChromeOS and CHromium Native are updated, type in "sync", hit enter, and than once you regain the ability to type a command in the terminal reboot your system, and boot into your now upgraded ChromeOS machine. It is important that you use this method, as updating ChromeOS via the update function built in will not work properly, and will try to update the 3rd partition, which is Chromium native. ChromeOS cannot be booted at this point. It is best to follow the instructions outlined here when updating.
+Now that both ChromeOS and Chromium Native are updated, type in "sync", hit enter, and than once you regain the ability to type a command in the terminal reboot your system, and boot into your now upgraded ChromeOS machine. It is important that you use this method, as updating ChromeOS via the update function built in will not work properly, and will try to update the 3rd partition, which is Chromium native. ChromeOS cannot be booted at this point. It is best to follow the instructions outlined here when updating.
 
+It is not clear whether you need to update Chromium native to have a bootable, upgraded version of ChromeOS. For now, updating Chromium is optional until we know more.
 
 ## Automated script to make all the process
 Working in this
