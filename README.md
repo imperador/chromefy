@@ -51,7 +51,7 @@ rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/ (name of folder depends on kernel)
 cp -av /lib/firmware /home/chronos/local/lib/
 cp -av /lib/modules/4.14.33 /home/chronos/local/lib/modules/
-rm -rf /home/chronos/local/etc/modprobe/alsa-skl.conf
+rm -rf /home/chronos/local/etc/modprobe.d/alsa-skl.conf
 ```
 
 Change in /home/chronos/local/etc/selinux/config the word enforcing to permissive with the following command:
