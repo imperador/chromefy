@@ -95,7 +95,7 @@ mount /dev/loop{number}p3 /home/chronos/chromium -o loop,ro
 Remember, the commands outlined here must be done in EXACTLY this order to guarantee everything goes smoothly. IF you don't do this and find neither the touchscreen, trackpad, or keyboard works, that's on you. Not me, or anyone else.
 
 ```sh
-rm -rf /home/chronos/local
+rm -rf /home/chronos/local/*
 cp -av /home/chronos/image/* /home/chronos/local
 rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/
