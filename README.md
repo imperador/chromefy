@@ -81,12 +81,12 @@ losetup -fP /home/chronos/user/Downloads/Chromium.img
 mount /dev/sda5 /home/chronos/local
 mount /dev/sda3 /home/chronos/native
 ```
-Now type losetup to get a list of Loop devices, find the one that cooresponds to your ChromeOS Image and than type:
+Now type losetup to get a list of Loop devices, find the one that corresponds to your ChromeOS Image and than type:
 ```sh
 mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
 ```
 
-Now look in losetup to find the loop device that cooresponds with your Chromium image. Type:
+Now look in losetup to find the loop device that corresponds with your Chromium image. Type:
 ```sh
 mount /dev/loop{number}p3 /home/chronos/chromium -o loop,ro
 ```
