@@ -69,6 +69,7 @@ Now press F10. If it boots coorectly, you are ready to go
 
 ## Updating ChromeOS and Chromium Native: The Setup
 You will need a Live USB of any Linux distribution. I recommend Mint or Ubuntu.
+Note: Replace "chronos" with the your username if dual booting or the name of the of distribution if booting from USB
 
 Find and download the updated recovery image for the device you used at chrome.qwedl.com
 
