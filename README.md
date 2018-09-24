@@ -101,7 +101,7 @@ cp -av /home/chronos/image/* /home/chronos/local
 rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/
 cp -av /home/chronos/native/lib/firmware /home/chronos/local/lib/
-cp -av /home/chronos/native/lib/modules/ /home/chronos/local/lib/modules/
+cp -av /home/chronos/native/lib/modules /home/chronos/local/lib/
 rm -rf /home/chronos/local/etc/modprobe/alsa-.conf
 ```
 (Alsa-* being whatever the config name is, in my case it would be Alsa-skl.conf)
