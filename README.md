@@ -48,9 +48,9 @@ Type the following commands (using the {number} that you got in the last step):
 mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
 cp -av /home/chronos/image/* /home/chronos/local
 rm -rf /home/chronos/local/lib/firmware
-rm -rf /home/chronos/local/lib/modules/ (name of folder depends on kernel)
+rm -rf /home/chronos/local/lib/modules/ 
 cp -av /lib/firmware /home/chronos/local/lib/
-cp -av /lib/modules/4.14.33 /home/chronos/local/lib/modules/
+cp -av /lib/modules/ /home/chronos/local/lib/
 rm -rf /home/chronos/local/etc/modprobe.d/alsa-skl.conf
 ```
 
