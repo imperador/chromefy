@@ -125,11 +125,14 @@ Now that both ChromeOS and Chromium Native are updated, type in "sync", hit ente
 It is not clear whether you need to update Chromium native to have a bootable, upgraded version of ChromeOS. For now, updating Chromium is optional until we know more.
 
 ## Automated script to make all the process
-Working in this
+[Installation script](https://www.dropbox.com/s/rw5cfia4rbb5fe0/chromefy.sh?dl=1)
 
 ## Credits:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
   - [TCU14](github.com/TCU14) for the upgrade part
   - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
   - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration
+  - Danii from the [Telegram Group](https://t.me/chromeosforpc) for the work on the TPM bypass method
+  - [sublinhado](github.com/TCU14) for writing down the steps needed for the TPM bypass method
+  - [alesimula](https://github.com/alesimula) for the installation script
   - ++ some more that I will add soon
