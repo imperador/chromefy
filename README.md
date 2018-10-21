@@ -126,7 +126,7 @@ It is not clear whether you need to update Chromium native to have a bootable, u
 
 ## Automated script to make all the process
 [Installation script](https://www.dropbox.com/s/rw5cfia4rbb5fe0/chromefy.sh?dl=1)
-- Syntax: sudo bash chromefy.sh (disk, eg /dev/sda) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image
+- Syntax: sudo bash chromefy.sh (partition of Chromium root, eg /dev/sda3) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image (This is optional, you only need to use the second argument and leave the third blank if you aren't experiencing login issues)
 
 ## Bypassing TPM for select recovery images (Eve, Fizz, etc)
 - [Instructions](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit)
