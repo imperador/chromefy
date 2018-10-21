@@ -126,10 +126,12 @@ It is not clear whether you need to update Chromium native to have a bootable, u
 
 ## Automated script to make all the process
 [Installation script](https://www.dropbox.com/s/rw5cfia4rbb5fe0/chromefy.sh?dl=1)
+- Syntax: sudo bash chromefy.sh (disk, eg /dev/sda) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image
 
 ## Bypassing TPM for select recovery images (Eve, Fizz, etc)
-- Instructions (Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline)
-[Instruction Sheet](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit)
+- [Instructions](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit)
+(Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline
+- The reason we need to bypass TPM2.0 for newer recovery images is because these images fail to login otherwise, or may get stuck in a login loop. Images such as Sentry, Asuka, and Caroline are using TPM1.2 which allows login to go successfully
 
 ## Credits:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
