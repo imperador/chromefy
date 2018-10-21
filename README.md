@@ -127,6 +127,10 @@ It is not clear whether you need to update Chromium native to have a bootable, u
 ## Automated script to make all the process
 [Installation script](https://www.dropbox.com/s/rw5cfia4rbb5fe0/chromefy.sh?dl=1)
 
+## Bypassing TPM for select recovery images (Eve, Fizz, etc)
+- Instructions (Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline)
+[Instruction Sheet](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit)
+
 ## Credits:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
   - [TCU14](github.com/TCU14) for the upgrade part
