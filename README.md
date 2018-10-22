@@ -135,10 +135,10 @@ It is not clear whether you need to update Chromium native to have a bootable, u
 
 ## Credits:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
-  - [TCU14](github.com/TCU14) for the upgrade part
+  - [TCU14](https://github.com/TCU14) for the upgrade part
   - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
   - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration
   - Danii from the [Telegram Group](https://t.me/chromeosforpc) for the work on the TPM bypass method
-  - [sublinhado](github.com/TCU14) for writing down the steps needed for the TPM bypass method
+  - [sublinhado](https://github.com/sublinhado) for writing down the steps needed for the TPM bypass method
   - [alesimula](https://github.com/alesimula) for the installation script
   - ++ some more that I will add soon
