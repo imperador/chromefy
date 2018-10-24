@@ -125,7 +125,7 @@ Now that both ChromeOS and Chromium Native are updated, type in "sync", hit ente
 It is not clear whether you need to update Chromium native to have a bootable, upgraded version of ChromeOS. For now, updating Chromium is optional until we know more.
 
 ## Automated script to make all the process
-[Installation script](https://www.dropbox.com/s/rw5cfia4rbb5fe0/chromefy.sh?dl=1)
+[Installation script](https://www.dropbox.com/s/snlbhfoy4hz3o5y/chromefy.sh?dl=1)
 - Syntax: sudo bash chromefy.sh (partition of Chromium root, eg /dev/sda3) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image (This is optional, you only need to use the second argument and leave the third blank if you aren't experiencing login issues)
 - Must be run from a live Chromium USB, do not run it on an already existing Chromium installation
 
