@@ -73,23 +73,14 @@ Note: Replace "chronos" with the your username if dual booting or the name of th
 
 Find and download the updated recovery image for the device you used at chrome.qwedl.com
 
-Go to ArnoldTheBats and find the latest daily build, download it. Extract the 7z file, and copy the Chromium image to your downloads. rename it to Chromium.img
-
 Now type in the following commands in the Linux terminal:
 ```sh
 losetup -fP /home/chronos/user/Downloads/chromeos.bin
-losetup -fP /home/chronos/user/Downloads/Chromium.img
 mount /dev/sda5 /home/chronos/local
-mount /dev/sda3 /home/chronos/native
 ```
 Now type losetup to get a list of Loop devices, find the one that corresponds to your ChromeOS Image and than type:
 ```sh
 mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
-```
-
-Now look in losetup to find the loop device that corresponds with your Chromium image. Type:
-```sh
-mount /dev/loop{number}p3 /home/chronos/chromium -o loop,ro
 ```
 
 ## Updating both ChromeOS and Chromium Native: The actual upgrade
@@ -111,19 +102,6 @@ Change in /home/chronos/local/etc/selinux/config the word enforcing to permissiv
 sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config
 ```
 
- [Optional] Now to update Chromium Native
-```sh
-rm -rf /home/chronos/native
-cp -av /home/chronos/chromium/* /home/chronos/native
-rm -rf /home/chronos/native/lib/firmware
-rm -rf /home/chronos/native/lib/modules/
-cp -av /home/chronos/local/firmware /home/chronos/native/lib/
-cp -av /home/chronos/local/lib/modules /home/chronos/native/lib/modules
-```
-Now that both ChromeOS and Chromium Native are updated, type in "sync", hit enter, and than once you regain the ability to type a command in the terminal reboot your system, and boot into your now upgraded ChromeOS machine. It is important that you use this method, as updating ChromeOS via the update function built in will not work properly, and will try to update the 3rd partition, which is Chromium native. ChromeOS cannot be booted at this point. It is best to follow the instructions outlined here when updating.
-
-It is not clear whether you need to update Chromium native to have a bootable, upgraded version of ChromeOS. For now, updating Chromium is optional until we know more.
-
 ## Automated script to make all the process
 [Installation script](https://www.dropbox.com/s/snlbhfoy4hz3o5y/chromefy.sh?dl=1)
 - Syntax: sudo bash chromefy.sh (partition of Chromium root, eg /dev/sda3) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image (This is optional, you only need to use the second argument and leave the third blank if you aren't experiencing login issues)
@@ -134,9 +112,16 @@ It is not clear whether you need to update Chromium native to have a bootable, u
 (Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline
 - The reason we need to bypass TPM2.0 for newer recovery images is because these images fail to login otherwise, or may get stuck in a login loop. Images such as Sentry, Asuka, and Caroline are using TPM1.2 which allows login to go successfully
 
+## Using ChromeOS with other operating systems
+Not everyone is willing to wipe their hard drives just to install ArnoldTheBats Chromium as a base, and for those people we have made a handy multiboot guide. YOu can check it out here:
+[MultiBoot Guide](https://docs.google.com/document/d/1uBU4IObDI8IFhSjeCMvKw46O4vKCnfeZTGF7Jx8Brno/edit?usp=sharing)
+
+Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial Chromefy upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
+
+
 ## Credits:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
-  - [TCU14](https://github.com/TCU14) for the upgrade part
+  - [TCU14](https://github.com/TCU14) for upgrading, and the MultiBoot guide
   - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
   - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration
   - Danii from the [Telegram Group](https://t.me/chromeosforpc) for the work on the TPM bypass method
