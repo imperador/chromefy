@@ -103,7 +103,7 @@ sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selin
 ```
 
 ## Automated script to make all the process
-[Installation script](https://www.dropbox.com/s/w3ifi8nmoutt8lm/chromefy.sh?dl=1)
+[Installation script](https://raw.githubusercontent.com/incod3x/chromefy/master/chromefy.sh)
 - Syntax: sudo bash chromefy.sh (partition of Chromium root, eg /dev/sda3) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image (This is optional, you only need to use the second argument and leave the third blank if you aren't experiencing login issues)
 - Must be run from a live Chromium USB, do not run it on an already existing Chromium installation
 
