@@ -64,12 +64,13 @@ if [ ! -z "$3" ]; then
 	rm -rf /home/chronos/local/etc/init/{attestationd,cr50-metrics,cr50-result,cr50-update,tpm_managerd,trunksd,u2fd}.conf
 
 	#Copy TPM 1.2 file from tpm1image
-	cp -av /home/chronos/tpm1image/etc/init/{chapsd,cryptohomed,tcsd,tpm-probe}.conf /home/chronos/local/etc/init/
+	cp -av /home/chronos/tpm1image/etc/init/{chapsd,cryptohomed,cryptohomed-client,tcsd,tpm-probe}.conf /home/chronos/local/etc/init/
 	cp -av /home/chronos/tpm1image/etc/tcsd.conf /home/chronos/local/etc/
-	cp -av /home/chronos/tpm1image/usr/bin/tpmc /home/chronos/local/usr/bin/
+	cp -av /home/chronos/tpm1image/usr/bin/{tpmc,chaps_client} /home/chronos/local/usr/bin/
 	cp -av /home/chronos/tpm1image/usr/lib64/libtspi.so{,.1{,.2.0}} /home/chronos/local/usr/lib64/
-	cp -av /home/chronos/tpm1image/usr/sbin/{chapsd,cryptohomed,tcsd} /home/chronos/local/usr/sbin/
-	cp -av /home/chronos/tpm1image/usr/share/cros/init/tcsd-pre-start.sh /home/chronos/local/usr/share/cros/init/
+	cp -av /home/chronos/tpm1image/usr/sbin/{chapsd,cryptohome,cryptohomed,cryptohome-path,tcsd} /home/chronos/local/usr/sbin/
+	cp -av /home/chronos/tpm1image/usr/share/cros/init/{tcsd-pre-start,chapsd}.sh /home/chronos/local/usr/share/cros/init/
+    cp -av /home/chronos/tpm1image/etc/dbus-1/system.d/{Cryptohome,org.chromium.Chaps}.conf /home/chronos/local/etc/dbus-1/system.d/
     if [ ! -f /home/chronos/local/usr/lib64/libecryptfs.so ] && [ -f /home/chronos/tpm1image/usr/lib64/libecryptfs.so ]; then
         cp -av /home/chronos/tpm1image/usr/lib64/libecryptfs* /home/chronos/local/usr/lib64/
         cp -av /home/chronos/tpm1image/usr/lib64/ecryptfs /home/chronos/local/usr/lib64/
