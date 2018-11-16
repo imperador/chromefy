@@ -113,18 +113,22 @@ sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selin
 - The reason we need to bypass TPM2.0 for newer recovery images is because these images fail to login otherwise, or may get stuck in a login loop. Images such as Sentry, Asuka, and Caroline are using TPM1.2 which allows login to go successfully
 
 ## Using ChromeOS with other operating systems
-Not everyone is willing to wipe their hard drives just to install ArnoldTheBats Chromium as a base, and for those people we have made a handy multiboot guide. YOu can check it out here:
+Not everyone is willing to wipe their hard drives just to install [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) as a base, and for those people we have made a handy multiboot guide. You can check it out here:
 [MultiBoot Guide](https://docs.google.com/document/d/1uBU4IObDI8IFhSjeCMvKw46O4vKCnfeZTGF7Jx8Brno/edit?usp=sharing)
 
 Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial Chromefy upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
 
 
 ## Credits:
-  - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the code here is from him
+  - [imperador](https://github.com/imperador) for the chromefy idea and the scripts
   - [TCU14](https://github.com/TCU14) for upgrading, and the MultiBoot guide
-  - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
-  - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration
-  - Danii from the [Telegram Group](https://t.me/chromeosforpc) for the work on the TPM bypass method
+  - [alesimula](https://github.com/alesimula) for the installation script and also for the XDA Tutorial
+  - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration and also for creating and managing the Telegram Group
   - [sublinhado](https://github.com/sublinhado) for writing down the steps needed for the TPM bypass method
-  - [alesimula](https://github.com/alesimula) for the installation script
-  - ++ some more that I will add soon
+  - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
+  - Danii from the [Telegram Group](https://t.me/chromeosforpc) for the work on the TPM bypass method
+
+## Big Thanks:
+  - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the scripts here is based on his ideas
+  - [arnold](https://chromium.arnoldthebat.co.uk) for his awesome builds
+  - ++ some more that I will add soon (remind me if I forgot someone)
