@@ -1,19 +1,75 @@
 # chromefy
 Transforming Chromium to Chrome
 
-You can find us in the Telegram Group:
+You can find us at the Telegram Group:
 https://t.me/chromeosforpc
+   > Please, ask your questions at the group and don't PM the admins. :)
 
 ## Observations
 
-  - You NEED a Chromium installation running (We strongly recommend using [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc))
-  - You HAVE to be logged in (because if you don't, the initial setup won't work)
-  - I am not responsible for any damage made to your computer by you or by your dog
-  - If you are using a Chromebook, you do not need to install Chromium. Just grab a suitable recovery image and follow the      installation instructions while in ChromeOS native
-## Getting the right IMG for YOUR pc
+  - You need a Chromium installation running
+    > We strongly recommend using [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc).
+    > Just deploy the img to a USB Stick, [Rufus](https://rufus.ie/en_IE.html) and similar programs will do the work.
+  - You have to be logged in (because if you don't, the initial setup won't work).
+  - We are not responsible for any damage made to your computer by you or by your dog.
+  - If you are using a Chromebook, you do not need to install Chromium. Just grab a suitable recovery image and follow the      installation instructions while in ChromeOS native.
+  - Don't use zip files. Extract and use the BIN file that is inside of it
 
-First, download the right recovery img here: chrome.qwedl.com (choose the one with the closest specs of your system)
-You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then search on the internet for which one is the best
+---
+
+## Required Files
+
+  - An [official Chrome OS recovery image](https://cros-updates-serving.appspot.com) (downloads on the right; RECOMMENDED: eve for mid/high resolution displays, pyro for (very) low-res displays). It must be from the same chipset family (Ex: Intel, ARM or RockChip)
+    > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
+  - Another Chrome OS recovery image from a TPM 1.2 device (EX: caroline; this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones). If you don't know which one, just pick caroline
+  - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
+   - The [Chromefy installation script](https://raw.githubusercontent.com/imperador/chromefy/master/chromefy.sh) (for the Method 1, the easy way).
+
+## Installation Methods
+
+Chromefy has two installation options. The two options will probably require you to resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB; I suggest using Gparted live USB to resize it; 
+
+### Option 1: Automated Script
+  - It uses a script, so the migration is easier.
+  - Requires: 2 USB sticks: The first to deploy the Chromium img on it and the second to store the two recovery files.
+  - As said before, you will need to resize the third partition of your sdX drive (EX: sda3 inside sda, if you main drive is sda). In this method you can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
+
+### Option 2: Manual Configuration
+  - It requires some patience and more commands.
+  - It can be done with only one USB stick.
+  - Here you can't just delete the fifth (sdX5) partition, because you will need it.
+ 
+Choose the best method for you and follow the installation process.
+
+---
+
+## Installation Process
+
+## Option 1: Automated Script
+
+Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell
+```sh
+sudo /usr/sbin/chromeos-install --dst YOURDRIVE (Ex: /dev/sda)
+```
+- Now make sure that your chromium HDD/SSD installation is working before proceeding. Also save your chosen recovery image (that we will be calling chosenImg.bin), caroline recovery image (here called carolineImg.bin) and the [Installation script](https://raw.githubusercontent.com/imperador/chromefy/master/chromefy.sh) to the second USB stick.
+
+Resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB (suggestion: search about using Gparted live USB to resize it). And remember: You can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
+
+After this, connect both USB sticks to you computer and boot from your live USB again (with Chromium), make sure you have your Chrome OS images available (on the second USB stick) and go to the folder where you downloaded the chromefy script and run it with the following command (considering your system partition as /dev/sda3):
+
+```sh
+sudo bash chromefy.sh /dev/sda3 /path/to/chosenImg.bin /path/to/carolineImg.bin
+```
+
+Don't leave live USB yet, make a powerwash (manually) by typing
+
+```sh
+sudo mkfs.ext4 YOURDATAPARTITION(Ex: /dev/sda1)
+```
+
+You can now reboot and enjoy your new "chromebook"
+
+### Option 2: Manual Configuration
  
 After finishing installing a Chromium OS, open the browser and press CTRL+ALT+T to open chroot
 Type:
@@ -23,23 +79,23 @@ sudo su
 ```
 
 Installing Chrome OS (some notes):
-  - If the file is in Downloads folder, {path}=home/chronos/user/Downloads, so use the path accordingly with your file location
-  - Change "chromeos_10575.58.0_caroline_recovery_stable-channel_mp.bin" to the name of YOUR recovery img.
+  - If the file is in Downloads folder, replace '{path}' with 'home/chronos/user/Downloads', if it is at another folder, replace it with the other folder location. Use the path accordingly with your file location
+  - Save your chosen recovery image (that we will be calling chosenImg.bin) and caroline recovery image (here called carolineImg.bin) at this folder
   - Any password or username will be 'chronos'
 
-## Configuring the new Chrome partition
+#### Configuring the new Chrome partition
 
 Use the following commands to configure the sda5 (or nvem0n1p5) and other basic things (the exemple is using caroline recovery file):
 Type "lsblk" to know your partitions. Search for sda, sdb or nvme0n1 with the size of your usb or HDD. In the following commands, change "sda" for the one that you've found:
 ```sh
-losetup -fP {path}/chromeos_10575.58.0_caroline_recovery_stable-channel_mp.bin
+losetup -fP {path}/chosenImg.bin
 mkdir /home/chronos/image
 mkdir /home/chronos/local
 mkfs.ext4 /dev/sda5
 mount /dev/sda5 /home/chronos/local
 ```
 
-## Copying the img to the local path
+#### Copying the img to the local path
 
 Type "losetup" to get a list, search for loop{number} that has the img file on it
 Memorise the number. So if it is loop2, then {number} = 2
@@ -60,6 +116,7 @@ sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selin
 ```
 Type "sync" and press Enter
 
+
 Now restart your computer. When the screen with the boot options appear (the grub), press 'e' FAST (or it will boot into the chromium). You will have to change the root for:
 root=/dev/sda5
 
@@ -67,7 +124,20 @@ Now press F10. If it boots coorectly, you are ready to go
  
 # ADITIONAL:
 
-## Updating ChromeOS and Chromium Native: The Setup
+  - Using ChromeOS with other Operating systems (Multiboot)
+  - Updating ChromeOS (for the Method 2)
+  - Resolving Problems With Login
+
+---
+## Using ChromeOS with other Operating systems (Multiboot)
+Not everyone is willing to wipe their hard drives just to install [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) as a base, and for those people we have made a handy multiboot guide. You can check it out here:
+[MultiBoot Guide](https://docs.google.com/document/d/1uBU4IObDI8IFhSjeCMvKw46O4vKCnfeZTGF7Jx8Brno/edit?usp=sharing)
+
+Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial Chromefy upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
+
+---
+## Updating ChromeOS (for the Method 2)
+### Updating ChromeOS and Chromium Native: The Setup
 You will need a Live USB of any Linux distribution. I recommend Mint or Ubuntu.
 Note: Replace "chronos" with the your username if dual booting or the name of the of distribution if booting from USB
 
@@ -83,7 +153,7 @@ Now type losetup to get a list of Loop devices, find the one that corresponds to
 mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
 ```
 
-## Updating both ChromeOS and Chromium Native: The actual upgrade
+### Updating both ChromeOS and Chromium Native: The actual upgrade
 Remember, the commands outlined here must be done in EXACTLY this order to guarantee everything goes smoothly. IF you don't do this and find neither the touchscreen, trackpad, or keyboard works, that's on you. Not me, or anyone else.
 
 ```sh
@@ -101,23 +171,14 @@ Change in /home/chronos/local/etc/selinux/config the word enforcing to permissiv
 ```sh
 sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config
 ```
+---
 
-## Automated script to make all the process
-[Installation script](https://raw.githubusercontent.com/imperador/chromefy/master/chromefy.sh)
-- Syntax: sudo bash chromefy.sh (partition of Chromium root, eg /dev/sda3) /path/to/desired/recovery/image /path/to/tpm1.2/recovery/image (This is optional, you only need to use the second argument and leave the third blank if you aren't experiencing login issues)
-- Must be run from a live Chromium USB, do not run it on an already existing Chromium installation
-
-## Bypassing TPM for select recovery images (Eve, Fizz, etc)
-- [Instructions](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit)
-(Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline
+## Resolving Problems With Login
+Bypassing TPM for select recovery images (Eve, Fizz, etc)
+- [Instructions](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit): Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline)
 - The reason we need to bypass TPM2.0 for newer recovery images is because these images fail to login otherwise, or may get stuck in a login loop. Images such as Sentry, Asuka, and Caroline are using TPM1.2 which allows login to go successfully
 
-## Using ChromeOS with other operating systems
-Not everyone is willing to wipe their hard drives just to install [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) as a base, and for those people we have made a handy multiboot guide. You can check it out here:
-[MultiBoot Guide](https://docs.google.com/document/d/1uBU4IObDI8IFhSjeCMvKw46O4vKCnfeZTGF7Jx8Brno/edit?usp=sharing)
-
-Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial Chromefy upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
-
+---
 
 ## Credits:
   - [imperador](https://github.com/imperador) for the chromefy idea and the scripts
