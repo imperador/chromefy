@@ -4,7 +4,6 @@ Transforming Chromium to Chrome
 You can find us at the Telegram Group:
 https://t.me/chromeosforpc
    > Please, ask your questions at the group and don't PM the admins. :)
-We also have a [Twitter](twitter.com/chromefy).
 
 ## Observations
 
