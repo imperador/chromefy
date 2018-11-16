@@ -69,6 +69,8 @@ sudo mkfs.ext4 YOURDATAPARTITION(Ex: /dev/sda1)
 
 You can now reboot and enjoy your new "chromebook"
 
+---
+
 ### Option 2: Manual Configuration
  
 After finishing installing a Chromium OS, open the browser and press CTRL+ALT+T to open chroot
