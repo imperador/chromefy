@@ -32,10 +32,10 @@ Chromefy has two installation options. The two options will probably require you
 ### Option 1: Automated Script
   - It uses a script, so the migration is easier.
   - Requires: 2 USB sticks: The first to deploy the Chromium img on it and the second to store the two recovery files.
-  - As said before, you will need to resize the third partition of your sdX drive (EX: sda3 inside sda, if you main drive is sda). In this method you can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
+  - As said before, you will need to resize the third partition of your sdX drive (EX: sda3 inside sda, if your main drive is sda). In this method you can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
 
 ### Option 2: Manual Configuration
-  - It requires some patience and more commands.
+  - It requires some patience and more commands. And it also has several steps that need to be done.
   - It can be done with only one USB stick.
   - Here you can't just delete the fifth (sdX5) partition, because you will need it.
  
@@ -45,7 +45,7 @@ Choose the best method for you and follow the installation process.
 
 ## Installation Process
 
-## Option 1: Automated Script
+### Option 1: Automated Script
 
 Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell
 ```sh
