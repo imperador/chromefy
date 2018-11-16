@@ -6,7 +6,7 @@ https://t.me/chromeosforpc
 
 ## Observations
 
-  - You NEED Chromium installation running 
+  - You NEED a Chromium installation running (We strongly recommend using [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc))
   - You HAVE to be logged in (because if you don't, the initial setup won't work)
   - I am not responsible for any damage made to your computer by you or by your dog
   - If you are using a Chromebook, you do not need to install Chromium. Just grab a suitable recovery image and follow the      installation instructions while in ChromeOS native
