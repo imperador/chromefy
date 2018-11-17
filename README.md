@@ -47,7 +47,7 @@ Choose the best method for you and follow the installation process.
 
 ### Option 1: Automated Script
 
-Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell
+Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell (keep in mind this will wipe your HDD, so backup everything you need and don't blame us later)
 ```sh
 sudo /usr/sbin/chromeos-install --dst YOURDRIVE (Ex: /dev/sda)
 ```
