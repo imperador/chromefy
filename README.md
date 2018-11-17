@@ -53,8 +53,10 @@ sudo /usr/sbin/chromeos-install --dst YOURDRIVE (Ex: /dev/sda)
 ```
 - Now make sure that your chromium HDD/SSD installation is working before proceeding. Also save your chosen recovery image (that we will be calling chosenImg.bin), caroline recovery image (here called carolineImg.bin) and the [Installation script](https://raw.githubusercontent.com/imperador/chromefy/master/chromefy.sh) to the second USB stick.
 
-Resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB (suggestion: search about using Gparted live USB to resize it). And remember: You can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
+Resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB (suggestion: search about using Gparted live USB to resize it). And remember: You can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space. 
 
+   > Multiboot users: You must use the ROOT-A partition instead of your third partition (sda3). 
+   
 After this, connect both USB sticks to you computer and boot from your live USB again (with Chromium), make sure you have your Chrome OS images available (on the second USB stick) and go to the folder where you downloaded the chromefy script and run it with the following command (considering your system partition as /dev/sda3):
 
 ```sh
