@@ -37,7 +37,7 @@ Chromefy has two installation options. The two options will probably require you
 ### Option 2: Manual Configuration
   - It requires some patience and more commands. And it also has several steps that need to be done.
   - It can be done with only one USB stick.
-  - Here you can't just delete the fifth (sdX5) partition, because you won't need it.
+  - Here you can't just delete the fifth (sdX5) partition, because you will need it.
  
 Choose the best method for you and follow the installation process.
 
