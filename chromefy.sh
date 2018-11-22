@@ -2,7 +2,7 @@
 
 #Script to install ChromeOS on top of ChromiumOS
 #If installing to a system partition, must be ran from ChromiumOS Live USB (otherwise, any Linux distro is fine)
-#You must install ChromiumOS on your Hard Drive before running this script
+#If installing to a system partition, You must install ChromiumOS on your Hard Drive before running this script
 
 #Parameters:
 #1 - ChromiumOS image or (HDD) system partition (ex: /dev/sda3) (If partition: I suggest to manually resize it to 4GB before running the script)
@@ -63,30 +63,39 @@ if [ "$flag_image" = true ]; then
     cp -av /home/chronos/local/lib /home/chronos/RAW/
     umount /home/chronos/local
     
+    PART_B=`sudo sfdisk -lq "$chromium_image" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
+    PART_A=`sudo sfdisk -lq "$chromium_image" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
+    PART_STATE=`sudo sfdisk -lq "$chromium_image" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
+    
+    START_NEWB=`sfdisk -o Device,Start -lq "$chromium_image" | grep "^""$PART_B"[[:space:]] | awk '{print $2}'`
+    END_NEWB=`expr $START_NEWB + 8191`
+    UUID_B=`sfdisk --part-uuid "$chromium_image" 5`
+    START_NEWA=`expr $END_NEWB + 1`
+    END_NEWA=`expr $(sfdisk -o Device,Start -lq "$chromium_image" | grep "^""$PART_STATE"[[:space:]] | awk '{print $2}') - 1`
+    UUID_A=`sfdisk --part-uuid "$chromium_image" 3`
+    
     #Deletes third (ROOT_A) and fifth (ROOT_B) partitions
     sfdisk --delete $chromium_image 5
     sfdisk --delete $chromium_image 3
     
     #Recreates the fifth partition with 4MB = 4194304
-    START_NEWB=`sgdisk -f $chromium_image`
-    END_NEWB=`expr $START_NEWB + 8192` #Considering sectors of 512 bytes
-    sgdisk -n 5:$START_NEWB:$END_NEWB $chromium_image
-    sgdisk -c 5:"ROOT-B" $chromium_image
-    sgdisk -t 5:"7F01" $chromium_image
-    e2label "$chromium_image"p5 "ROOT-B"
-    mkfs.ext4 "$chromium_image"p5
+    echo -e 'n\n5\n'"$START_NEWB"'\n'"$END_NEWB"'\nw' | fdisk "$chromium_image"; sync
+    sfdisk --part-label "$chromium_image" 5 "ROOT-B"
+    sfdisk --part-type "$chromium_image" 5 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
+    sfdisk --part-uuid "$chromium_image" 5 "$UUID_B"
+    e2label "$PART_B" "ROOT-B"
+    mkfs.ext4 "$PART_B"
     
     #Recreates the third partition with the remaining space
-    START_NEWA=`sgdisk -f $chromium_image`
-    END_NEWA=`sgdisk -E $chromium_image`
-    sgdisk -n 3:$START_NEWA:$END_NEWA $chromium_image
-    sgdisk -c 3:"ROOT-A" $chromium_image
-    sgdisk -t 3:"7F01" $chromium_image
-    e2label "$chromium_image"p3 "ROOT-A"
-    mkfs.ext4 "$chromium_image"p3
+    echo -e 'n\n3\n'"$START_NEWA"'\n'"$END_NEWA"'\nw' | fdisk "$chromium_image"; sync
+    sfdisk --part-label "$chromium_image" 3 "ROOT-A"
+    sfdisk --part-type "$chromium_image" 3 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
+    sfdisk --part-uuid "$chromium_image" 3 "$UUID_A"
+    e2label "$PART_A" "ROOT-A"
+    mkfs.ext4 "$PART_A"
     
     #Searches and fixes errors at filesystem-3, then remounts
-    e2fsck -f -y -v -C 0 "$chromium_image"p3
+    e2fsck -f -y -v -C 0 "$PART_A"
 fi
 
 #Mounts ChromiumOS system partition
@@ -98,7 +107,7 @@ if [ "$flag_image" = false ]; then
     if [ ! $? -eq 0 ]; then echo "Partition $1 inexistent"; abort_chromefy; fi
 else
     chromium_root_dir="/home/chronos/RAW"
-    mount "$chromium_image"p3 /home/chronos/local -o loop,rw,sync  2>/dev/null
+    mount "$PART_A" /home/chronos/local -o loop,rw,sync  2>/dev/null
     if [ ! $? -eq 0 ]; then echo "Something went wrong while changing $1 partition table (corrupted?)"; abort_chromefy; fi
 fi
 
