@@ -75,23 +75,23 @@ if [ "$flag_image" = true ]; then
     UUID_A=`sfdisk --part-uuid "$chromium_image" 3`
     
     #Deletes third (ROOT_A) and fifth (ROOT_B) partitions
-    sfdisk --delete $chromium_image 5
-    sfdisk --delete $chromium_image 3
+    flock "$chromium_image" sfdisk --delete $chromium_image 5
+    flock "$chromium_image" sfdisk --delete $chromium_image 3
     
     #Recreates the fifth partition with 4MB = 4194304
-    echo -e 'n\n5\n'"$START_NEWB"'\n'"$END_NEWB"'\nw' | fdisk "$chromium_image"; sync
-    sfdisk --part-label "$chromium_image" 5 "ROOT-B"
-    sfdisk --part-type "$chromium_image" 5 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
-    sfdisk --part-uuid "$chromium_image" 5 "$UUID_B"
-    e2label "$PART_B" "ROOT-B"
+    echo -e 'n\n5\n'"$START_NEWB"'\n'"$END_NEWB"'\nw' | flock "$chromium_image" fdisk "$chromium_image";
+    flock "$chromium_image" sfdisk --part-label "$chromium_image" 5 "ROOT-B"
+    flock "$chromium_image" sfdisk --part-type "$chromium_image" 5 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
+    flock "$chromium_image" sfdisk --part-uuid "$chromium_image" 5 "$UUID_B"
+    flock "$chromium_image" e2label "$PART_B" "ROOT-B"
     mkfs.ext4 "$PART_B"
     
     #Recreates the third partition with the remaining space
-    echo -e 'n\n3\n'"$START_NEWA"'\n'"$END_NEWA"'\nw' | fdisk "$chromium_image"; sync
-    sfdisk --part-label "$chromium_image" 3 "ROOT-A"
-    sfdisk --part-type "$chromium_image" 3 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
-    sfdisk --part-uuid "$chromium_image" 3 "$UUID_A"
-    e2label "$PART_A" "ROOT-A"
+    echo -e 'n\n3\n'"$START_NEWA"'\n'"$END_NEWA"'\nw' | flock "$chromium_image" fdisk "$chromium_image";
+    flock "$chromium_image" sfdisk --part-label "$chromium_image" 3 "ROOT-A"
+    flock "$chromium_image" sfdisk --part-type "$chromium_image" 3 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
+    flock "$chromium_image" sfdisk --part-uuid "$chromium_image" 3 "$UUID_A"
+    flock "$chromium_image" e2label "$PART_A" "ROOT-A"
     mkfs.ext4 "$PART_A"
     
     #Searches and fixes errors at filesystem-3, then remounts
@@ -149,7 +149,7 @@ if [ ! -z "$3" ]; then
 fi
 
 #Expose the internal camera to android container
-internal_camera=`dmesg | grep uvcvideo -m 1 | awk -F'[()]' '{print $2}'`
+internal_camera=`dmesg | grep uvcvideo -m 1 | awk -F '[()]' '{print $2}'`
 original_camera=`sed -nr 's,^camera0.module0.usb_vid_pid=(.*),\1,p'  /home/chronos/local/etc/camera/camera_characteristics.conf`
 if [ ! -z $internal_camera ] && [ ! -z $original_camera ]
   then
