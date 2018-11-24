@@ -159,4 +159,8 @@ fi
 
 cleanup_chromefy
 echo
-echo "ChromeOS installed, you can now reboot"
+if [ "$flag_image" = false ]; then
+    echo "ChromeOS installed, you can now reboot"
+else 
+    echo "ChromeOS image created: this is for personal use only, distribute at your own risk"
+fi
