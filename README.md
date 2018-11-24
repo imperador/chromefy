@@ -76,7 +76,7 @@ After finishing the process, you will have the **chromium.img**. It is now a ful
 
 #### Installing an img at your computer
 
-If you already have a Chromefy-generated ChromeOS img, you can deploy it to a usb stick and just boot from it at your computer.
+If you already have a Chromefy-generated ChromeOS img, you can deploy it to a usb stick and then just boot from it at your computer.
 
 When the login screen appears, press "CTRL + ALT + F2" and type the following commands:
 
@@ -87,7 +87,7 @@ cd /
 sudo   /usr/sbin/chromeos-install  --dst  /dev/sda  --skip_postinstall
 ```
 
-When the process finish, turn off your computer, remove your usb stick and turn it on again. It will boot into your newly Chrome OS device. Congratulations!
+When the process finish, turn off your computer, remove your usb stick and turn it on again. It will boot into your Chrome OS device. Congratulations!
 
 ### Option 2: Automated Script - Applying Chrome to Chromium:
 
