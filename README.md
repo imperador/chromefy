@@ -61,7 +61,7 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Considering that *chromium.img*, *recovery.bin* and *caroline.bin* are, respectively, the downloaded Chromium, the recovery image and the caroline image. Put them together at the same folder together with *chromefy.sh*. If the files are in Downloads folder, you need to replace '{path}' with 'home/chronos/user/Downloads' in this guide, if it is at another folder, replace it with the other folder location. Use the path accordingly with your file location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
+Log into a Linux or Chromium OS computer. Considering that *chromium.img*, *recovery.bin* and *caroline.bin* are, respectively, the downloaded Chromium, the recovery image and the caroline image. Put them together at the same folder together with [chromefy.sh](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). If the files are in Downloads folder, you need to replace '{path}' with 'home/chronos/user/Downloads' in this guide, if it is at another folder, replace it with the other folder location. Use the path accordingly with your file location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
 > Note: Your original chromium.img file will be replaced, so backup it if you want
 
 If you are using Chromium you will need to press "CTRL + ALT + T", type "shell" and press Enter. If you are using Linux, just open the Terminal. Now, in both systems, just type these commands:
@@ -95,7 +95,7 @@ Flash the selected **Chromium** OS build on the first USB, boot into the live US
 ```sh
 sudo /usr/sbin/chromeos-install --dst YOURDRIVE (Ex: /dev/sda)
 ```
-- Now make sure that your chromium HDD/SSD installation is working before proceeding. Also save your chosen recovery image (that we will be calling chosenImg.bin), caroline recovery image (here called carolineImg.bin) and the [Installation script](https://raw.githubusercontent.com/imperador/chromefy/master/chromefy.sh) to the second USB stick.
+- Now make sure that your chromium HDD/SSD installation is working before proceeding. Also save your chosen recovery image (that we will be calling chosenImg.bin), caroline recovery image (here called carolineImg.bin) and the [Installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) to the second USB stick.
 
 Resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB (suggestion: search about using Gparted live USB to resize it). And remember: You can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space. 
 
