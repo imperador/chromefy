@@ -9,7 +9,7 @@ You can also follow us on Twitter: https://twitter.com/chromefy
 
 ## Observations
 
-  - You need a Chromium installation running
+  - You need a Chromium installation running for the Methods 2 and 3
     > We strongly recommend using [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) Stable builds.
     > Just deploy the img to a USB Stick, [Rufus](https://rufus.ie/en_IE.html) and similar programs will do the work.
   - You have to be logged in (because if you don't, the initial setup won't work).
@@ -25,18 +25,23 @@ You can also follow us on Twitter: https://twitter.com/chromefy
     > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
   - Another Chrome OS recovery image from a TPM 1.2 device (EX: caroline; this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones). If you don't know which one, just pick caroline
   - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
-   - The [Chromefy installation script](https://raw.githubusercontent.com/imperador/chromefy/master/chromefy.sh) (for the Method 1, the easy way).
+   - The [Chromefy installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) (for the Method 1 and Method 2, the easy ways).
 
 ## Installation Methods
 
-Chromefy has two installation options. The two options will probably require you to resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB; I suggest using Gparted live USB to resize it; 
+Chromefy has three installation options. The first option generates an img ready to deploy into your usb stick and then you can boot from it to install Chrome at your computer. The last two options will probably require you to resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB; I suggest using Gparted live USB to resize it; 
 
-### Option 1: Automated Script
+### Option 1: Automated generation of Chrome img
+  - It uses a script and you don't need to resize partitions.
+  - Requires: One computer running Linux or Chromium.
+  - It will generate a Chrome img ready to install.
+
+### Option 2: Automated Script
   - It uses a script, so the migration is easier.
   - Requires: 2 USB sticks: The first to deploy the Chromium img on it and the second to store the two recovery files.
   - As said before, you will need to resize the third partition of your sdX drive (EX: sda3 inside sda, if your main drive is sda). In this method you can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
 
-### Option 2: Manual Configuration
+### Option 3: Manual Configuration
   - It requires some patience and more commands. And it also has several steps that need to be done.
   - It can be done with only one USB stick.
   - Here you can't just delete the fifth (sdX5) partition, because you will need it.
@@ -47,7 +52,44 @@ Choose the best method for you and follow the installation process.
 
 ## Installation Process
 
-### Option 1: Automated Script
+With the automated script method you can either generate your own Chrome img ready to run and install (Option 1) or you can also apply the Chrome into a installed Chromium at your computer (Option 2). I strongly suggest you to use the first one, because it will also allows you to have a backup img to deploy anytime you want to install it on a new pc.
+
+
+### Option 1: Automated Script - Generating your own Chrome img:
+
+Here you will generate your img and then deploy it to a usb stick, this will allow you to install it on your computer. If you already have a Chromefy-generated ChromeOS img, you can deploy it to a usb stick, boot from it at your computer and then jump to the ***Installing an img at your computer***. We won't provide the imgs.
+
+#### Generating the img
+
+Log into a Linux or Chromium OS computer. Considering that *chromium.img*, *recovery.bin* and *caroline.bin* are, respectively, the downloaded Chromium, the recovery image and the caroline image. Put them together at the same folder together with *chromefy.sh*. If the files are in Downloads folder, you need to replace '{path}' with 'home/chronos/user/Downloads' in this guide, if it is at another folder, replace it with the other folder location. Use the path accordingly with your file location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
+> Note: Your original chromium.img file will be replaced, so backup it if you want
+
+If you are using Chromium you will need to press "CTRL + ALT + T", type "shell" and press Enter. If you are using Linux, just open the Terminal. Now, in both systems, just type these commands:
+
+```sh
+sudo su
+cd /
+sudo  bash  chromefy.sh  chromium.img  recovery.bin  caroline.bin  
+```
+
+After finishing the process, you will have the **chromium.img**. It is now a full ChromeOS img. You can use any program to deploy it to a usb stick and boot from it. Programs like [Etcher](https://www.balena.io/etcher/) (Windows or Linux), [Rufus](https://rufus.ie/en_IE.html) (Windows only) and [Chromebook Recovery Utility](https://chrome.google.com/webstore/detail/chromebook-recovery-utili/jndclpdbaamdhonoechobihbbiimdgai?hl=en) (Chromium only) will do the work. Just deply the img to your usb stick.
+
+#### Installing an img at your computer
+
+If you already have a Chromefy-generated ChromeOS img, you can deploy it to a usb stick and just boot from it at your computer.
+
+When the login screen appears, press "CTRL + ALT + F2" and type the following commands:
+
+```sh
+chronos
+sudo su
+cd /
+sudo   /usr/sbin/chromeos-install  --dst  /dev/sda  --skip_postinstall
+```
+
+When the process finish, turn off your computer, remove your usb stick and turn it on again. It will boot into your newly Chrome OS device. Congratulations!
+
+### Option 2: Automated Script - Applying Chrome to Chromium:
 
 Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell (keep in mind this will wipe your HDD, so backup everything you need and don't blame us later)
 ```sh
@@ -75,7 +117,7 @@ You can now reboot and enjoy your new "chromebook"
 
 ---
 
-### Option 2: Manual Configuration
+### Option 3: Manual Configuration
  
 After finishing installing a Chromium OS, open the browser and press CTRL+ALT+T to open chroot
 Type:
@@ -142,7 +184,7 @@ Not everyone is willing to wipe their hard drives just to install [ArnoldTheBats
 Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial Chromefy upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
 
 ---
-## Updating ChromeOS (for the Method 2)
+## Updating ChromeOS (for the Method 3)
 ### Updating ChromeOS and Chromium Native: The Setup
 You will need a Live USB of any Linux distribution. I recommend Mint or Ubuntu.
 Note: Replace "chronos" with the your username if dual booting or the name of the of distribution if booting from USB
