@@ -45,7 +45,7 @@ fi
 
 if [ ! -f "$2" ]; then echo "Image $2 not found"; abort_chromefy; fi
 dualboot_image=`losetup --show -fP "$2"`
-mount "$dualboot_image"p3 /home/chronos/dualboot -o loop,ro  2>/dev/null
+mount "$dualboot_image" /home/chronos/dualboot -o loop,ro  2>/dev/null
 if [ ! $? -eq 0 ]; then echo "Image $2 does not have a system partition (corrupted?)"; abort_chromefy; fi
 
 #Copies all Dualboot files
