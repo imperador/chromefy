@@ -68,9 +68,11 @@ If you are using Chromium you will need to press "CTRL + ALT + T", type "shell" 
 
 ```sh
 sudo su
-cd /
+cd {path}
 sudo  bash  chromefy.sh  chromium.img  recovery.bin  caroline.bin  
 ```
+
+  > Reminder: {path} is the folder where you saved your files
 
 After finishing the process, you will have the **chromium.img**. It is now a full ChromeOS img. You can use any program to deploy it to a usb stick and boot from it. Programs like [Etcher](https://www.balena.io/etcher/) (Windows or Linux), [Rufus](https://rufus.ie/en_IE.html) (Windows only) and [Chromebook Recovery Utility](https://chrome.google.com/webstore/detail/chromebook-recovery-utili/jndclpdbaamdhonoechobihbbiimdgai?hl=en) (Chromium only) will do the work. Just deply the img to your usb stick.
 
