@@ -1,11 +1,11 @@
 #!/bin/sh
 
 #Script to install ChromeOS on top of ChromiumOS
-#If installing to a system partition, must be ran from ChromiumOS Live USB (otherwise, any Linux distro is fine)
-#If installing to a system partition, You must install ChromiumOS on your Hard Drive before running this script
+#Can be used to install on a disk drive or applied to a ChromiumOS image
+#If installing to a disk drive, you must run it from a different drive/USB
 
 #Parameters:
-#1 - ChromiumOS image or (HDD) system partition (ex: /dev/sda3) (If partition: I suggest to manually resize it to 4GB before running the script)
+#1 - ChromiumOS image, drive (ex: /dev/sda) or system partition (ex: /dev/sda3) (If partition: manually resize it to 4GB before running the script)
 #2 - ChromeOS image file to be installed
 #3 - [Optional] ChromeOS image from older device with TPM1.2 (ex: caroline image file) (needed for TPM2 images like eve to be able to login)
 
@@ -13,7 +13,6 @@ if ( ! test -z {,} ); then echo "Must be ran with \"sudo bash\""; exit 1; fi
 if [ $(whoami) != "root" ]; then echo "Please run with sudo"; exit 1; fi
 if [ -z "$2" ]; then echo "Missing parametes"; exit 1; fi
 if [ -b "$1" ]; then flag_image=false; elif [ -f "$1" ]; then flag_image=true; else echo "Invalid image or partition: $1"; exit 1; fi
-if [ "$flag_image" = false ] && [ ! -e "/usr/sbin/chromeos-install" ]; then echo "You need to be running ChromiumOS (Live USB) to chromefy a drive partition"; exit 1; fi;
 
 if [ ! -d /home/chronos ]; then mkdir /home/chronos; fi
 if [ ! -d /home/chronos/image ]; then mkdir /home/chronos/image; fi
@@ -38,12 +37,22 @@ function abort_chromefy {
     exit 1
 }
 
+function read_choice {
+    while read choice; do
+        case "$choice" in 
+            [yY]|[yY][eE][sS] ) choice=true; break;;
+            [nN]|[nN][oO] ) choice=false; break;;
+            * ) echo "Invalid choice";;
+        esac
+    done
+}
+
 #Checks if images are valid and mounts them
 if [ "$flag_image" = true ]; then
     chromium_image=`losetup --show -fP "$1"`
     mount "$chromium_image"p3 /home/chronos/local -o loop,rw  2>/dev/null
     if [ ! $? -eq 0 ]; then echo "Image $1 does not have a system partition (corrupted?)"; abort_chromefy; fi
-fi
+else chromium_image="$1"; fi
 
 if [ ! -f "$2" ]; then echo "Image $2 not found"; abort_chromefy; fi
 chromeos_image=`losetup --show -fP "$2"`
@@ -57,16 +66,46 @@ if [ ! -z "$3" ]; then
     if [ ! $? -eq 0 ]; then echo "Image $3 does not have a system partition (corrupted?)"; abort_chromefy; fi
 fi
 
-#Increases ROOT_A partition's size (if flashing on image)
-if [ "$flag_image" = true ]; then
-    #Backups ChromiumOS' /lib
+#Checks if disk or partition
+PART_B=`sfdisk -lq "$chromium_image" 2>/dev/null | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
+PART_A=`sfdisk -lq "$chromium_image" 2>/dev/null | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
+PART_STATE=`sfdisk -lq "$chromium_image" 2>/dev/null | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
+if [ "$flag_image" = false ]; then
+    if [ ! -z `sfdisk -lq "$chromium_image" 2>/dev/null` ]; then
+        flag_disk=true
+        if [ $(sudo sfdisk --part-type "$1" 3 2>/dev/null) != "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC" ]
+            then echo "Invalid device (Chromium/Chrome not installed)"; abort_chromefy
+        fi
+    else
+        flag_disk=false
+        PART_A="$1"
+    fi
+fi
+
+#Backups ChromiumOS /lib directory if needed
+KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
+KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
+chromium_root_dir=""
+flag_linux=true
+choice=false
+if [ -e "/usr/sbin/chromeos-install" ] && [ ! -z "$KERNEL_LOCAL" ] && [ "$KERNEL_LOCAL" = "$KERNEL_CHROMIUM" ]; then
+    echo "Local ChromiumOS installation detected; use local files (y/n)?"
+    read_choice
+fi
+if [ "$choice" = false ]; then
+    chromium_root_dir="/home/chronos/RAW"
+    flag_linux=false
+    if [ "$flag_image" = false ]; then mount "$PART_A" /home/chronos/local; fi
     cp -av /home/chronos/local/lib /home/chronos/RAW/
-    umount /home/chronos/local
-    
-    PART_B=`sudo sfdisk -lq "$chromium_image" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
-    PART_A=`sudo sfdisk -lq "$chromium_image" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
-    PART_STATE=`sudo sfdisk -lq "$chromium_image" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
-    
+    if [ ! $? -eq 0 ]; then echo "Error while copying ChromiumOS files locally (insufficent disk space?)"; abort_chromefy; fi
+fi
+umount /home/chronos/local 2>/dev/null
+
+#Increases ROOT_A partition's size (if flashing on image)
+choice=false
+if [ "$flag_image" = true ]; then choice=true;
+elif [ "$flag_disk" = true ]; then echo "Resize the system partition (y/n)?"; read_choice; fi;
+if [ "$choice" = true ]; then
     START_NEWB=`sfdisk -o Device,Start -lq "$chromium_image" | grep "^""$PART_B"[[:space:]] | awk '{print $2}'`
     END_NEWB=`expr $START_NEWB + 8191`
     UUID_B=`sfdisk --part-uuid "$chromium_image" 5`
@@ -79,20 +118,26 @@ if [ "$flag_image" = true ]; then
     flock "$chromium_image" sfdisk --delete $chromium_image 3
     
     #Recreates the fifth partition with 4MB = 4194304
-    echo -e 'n\n5\n'"$START_NEWB"'\n'"$END_NEWB"'\nw' | flock "$chromium_image" fdisk "$chromium_image";
+    echo -e 'n\n5\n'"$START_NEWB"'\n'"$END_NEWB"'\nw' | flock "$chromium_image" fdisk "$chromium_image"
+    flock "$chromium_image" resize2fs "$PART_B"
     flock "$chromium_image" sfdisk --part-label "$chromium_image" 5 "ROOT-B"
     flock "$chromium_image" sfdisk --part-type "$chromium_image" 5 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
     flock "$chromium_image" sfdisk --part-uuid "$chromium_image" 5 "$UUID_B"
     flock "$chromium_image" e2label "$PART_B" "ROOT-B"
-    mkfs.ext4 "$PART_B"
+    yes | mkfs.ext4 "$PART_B"
     
     #Recreates the third partition with the remaining space
-    echo -e 'n\n3\n'"$START_NEWA"'\n'"$END_NEWA"'\nw' | flock "$chromium_image" fdisk "$chromium_image";
+    echo -e 'n\n3\n'"$START_NEWA"'\n'"$END_NEWA"'\nw' | flock "$chromium_image" fdisk "$chromium_image"
+    flock "$chromium_image" hdparm -z "$chromium_image"
+    flock "$chromium_image" dd bs=512 count=`expr $END_NEWA + 1 - $START_NEWA` if=/dev/zero of="$PART_A"
+    flock "$chromium_image" yes | mke2fs -S "$PART_A"
+    flock "$chromium_image" e2fsck -y -v -C 0 "$PART_A"
+    flock "$chromium_image" resize2fs "$PART_A"
     flock "$chromium_image" sfdisk --part-label "$chromium_image" 3 "ROOT-A"
     flock "$chromium_image" sfdisk --part-type "$chromium_image" 3 "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC"
     flock "$chromium_image" sfdisk --part-uuid "$chromium_image" 3 "$UUID_A"
     flock "$chromium_image" e2label "$PART_A" "ROOT-A"
-    mkfs.ext4 "$PART_A"
+    yes | mkfs.ext4 "$PART_A"
     
     #Searches and fixes errors at filesystem-3, then remounts
     e2fsck -f -y -v -C 0 "$PART_A"
@@ -100,13 +145,11 @@ fi
 
 #Mounts ChromiumOS system partition
 if [ "$flag_image" = false ]; then
-    chromium_root_dir=""
-    umount "$1" 2>/dev/null
-    mkfs.ext4 "$1"
-    mount "$1" /home/chronos/local
-    if [ ! $? -eq 0 ]; then echo "Partition $1 inexistent"; abort_chromefy; fi
+    umount "$PART_A" 2>/dev/null
+    mkfs.ext4 "$PART_A"
+    mount "$PART_A" /home/chronos/local
+    if [ ! $? -eq 0 ]; then echo "Partition $PART_A inexistent"; abort_chromefy; fi
 else
-    chromium_root_dir="/home/chronos/RAW"
     mount "$PART_A" /home/chronos/local -o loop,rw,sync  2>/dev/null
     if [ ! $? -eq 0 ]; then echo "Something went wrong while changing $1 partition table (corrupted?)"; abort_chromefy; fi
 fi
