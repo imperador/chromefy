@@ -18,7 +18,7 @@ EFIPART=`sfdisk -lq "$1" 2>/dev/null | grep "^""$1""[^:]" | awk '{print $1}' | g
 
 # Try to mount the EFI partition
 mount "$EFIPART" /home/chronos/EFI -o loop,rw  2>/dev/null
-if [ ! $? -eq 0 ]; then echo "Disk $1 does not have a EFI partition (corrupted?)"; abort_chromefy; fi
+if [ ! $? -eq 0 ]; then echo "Disk $1 does not have a EFI partition (corrupted?)"; fix_grub; fi
 
 # Gets the UUID at the grub file
 OLD_UUID=`cat /home/chronos/EFI/efi/boot/grub.cfg | grep -m 1 "PARTUUID=" | awk '{print $15}' | cut -d'=' -f3`
