@@ -4,6 +4,7 @@
 #If installing to a system partition, must be ran from ChromiumOS Live USB (otherwise, any Linux distro is fine)
 #You must install ChromiumOS on your Hard Drive before running this script
 #After the process, just run: "sudo bash /usr/sbin/dual-boot-install -d /dev/sda"
+#This script adds Fyde dual booot files to your chromeos. Not solid yet, so keep in mind that it is a test.
 
 #Parameters:
 #1 - ChromiumOS image or (HDD) system partition (ex: /dev/sda3) (If partition: I suggest to manually resize it to 4GB before running the script)
