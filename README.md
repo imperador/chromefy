@@ -91,6 +91,14 @@ sudo   /usr/sbin/chromeos-install  --dst  /dev/sda  --skip_postinstall
 
 When the process finish, turn off your computer, remove your usb stick and turn it on again. It will boot into your Chrome OS device. Congratulations!
 
+#### Fixing Grub
+
+If it doesn't work after your reboot. Just boot into your USB stick again, make sure you have an internet connection, go to the shell command line and type this command:
+
+```sh
+curl  -L  https://goo.gl/HdjwAZ   |  sudo  bash  -s  /dev/sda
+```
+
 ### Option 2: Automated Script - Applying Chrome to Chromium:
 
 Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell (keep in mind this will wipe your HDD, so backup everything you need and don't blame us later)
