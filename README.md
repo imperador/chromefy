@@ -61,10 +61,14 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Considering that *chromium.img*, *recovery.bin* and *caroline.bin* are, respectively, the downloaded Chromium, the [recovery image and the caroline image](https://cros-updates-serving.appspot.com). Put them together at the same folder together with [chromefy.sh](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). If the files are in Downloads folder, you need to replace '{path}' with 'home/chronos/user/Downloads' in this guide, if it is at another folder, replace it with the other folder location. Use the path accordingly with your file location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
+Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your two recovery images (e.g Eve and Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). Place all the files in one location. Downloads is a good idea.
+
+In the next step you need to replace '{path}' with the location of all these files. If you put them in Downloads then {path} would be replaced with 'home/chronos/user/Downloads'.
+If the files are in another folder, replace it with the other folder location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
 > Note: Your original chromium.img file will be replaced, so backup it if you want
 
-If you are using Chromium you will need to press "CTRL + ALT + T", type "shell" and press Enter. If you are using Linux, just open the Terminal. Now, in both systems, just type these commands:
+Now open a terminal (if you’re using ChromiumOS press CTRL + ALT + T, then type the command shell.) For any other Linux OS a normal terminal is fine, and then type the following commands:
+
 
 ```sh
 sudo su
