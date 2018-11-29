@@ -11,7 +11,7 @@
 
 if ( ! test -z {,} ); then echo "Must be ran with \"sudo bash\""; exit 1; fi
 if [ $(whoami) != "root" ]; then echo "Please run with sudo"; exit 1; fi
-if [ -z "$2" ]; then echo "Missing parametes"; exit 1; fi
+if [ -z "$2" ]; then echo "Missing parameters"; exit 1; fi
 if [ -b "$1" ]; then flag_image=false; elif [ -f "$1" ]; then flag_image=true; else echo "Invalid image or partition: $1"; exit 1; fi
 
 if [ ! -d /home/chronos ]; then mkdir /home/chronos; fi
