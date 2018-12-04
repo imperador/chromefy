@@ -129,7 +129,7 @@ if [ "$choice" = true ]; then
     #Recreates the third partition with the remaining space
     echo -e 'n\n3\n'"$START_NEWA"'\n'"$END_NEWA"'\nw' | flock "$chromium_image" fdisk "$chromium_image"
     flock "$chromium_image" hdparm -z "$chromium_image"
-    flock "$chromium_image" dd bs=512 count=`expr $END_NEWA + 1 - $START_NEWA` if=/dev/zero of="$PART_A"
+    # flock "$chromium_image" dd bs=512 count=`expr $END_NEWA + 1 - $START_NEWA` if=/dev/zero of="$PART_A"
     flock "$chromium_image" yes | mke2fs -S "$PART_A"
     flock "$chromium_image" e2fsck -y -v -C 0 "$PART_A"
     flock "$chromium_image" resize2fs "$PART_A"
