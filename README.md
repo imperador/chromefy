@@ -1,4 +1,7 @@
-# chromefy
+# chromefy black
+
+Chromefy Black is the BETA release and therefore may be unstable.
+
 Transforming Chromium to Chrome
 
 You can find us at the Telegram Group:
@@ -25,7 +28,7 @@ You can also follow us on Twitter: https://twitter.com/chromefy
     > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
   - Another Chrome OS recovery image from a TPM 1.2 device (EX: caroline; this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones). If you don't know which one, just pick caroline
   - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
-   - The [Chromefy installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) (for the Method 1 and Method 2, the easy ways).
+   - The [Chromefy installation script](https://github.com/imperador/chromefy/blob/Black/chromefyblack.sh) (for the Method 1 and Method 2, the easy ways).
 
 ## Installation Methods
 
@@ -61,7 +64,7 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your two recovery images (e.g Eve and Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). Place all the files in one location. Downloads is a good idea.
+Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your two recovery images (e.g Eve and Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/blob/Black/chromefyblack.sh). Place all the files in one location. Downloads is a good idea.
 
 In the next step you need to replace '{path}' with the location of all these files. If you put them in Downloads then {path} would be replaced with 'home/chronos/user/Downloads'.
 If the files are in another folder, replace it with the other folder location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
@@ -73,7 +76,7 @@ Now open a terminal (if you’re using ChromiumOS press CTRL + ALT + T, then typ
 ```sh
 sudo su
 cd {path}
-sudo  bash  chromefy.sh  chromium.img  recovery.bin  caroline.bin  
+sudo  bash  chromefyblack.sh  chromium.img  recovery.bin  caroline.bin  
 ```
 
   > Reminder: {path} is the folder where you saved your files
