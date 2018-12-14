@@ -21,7 +21,7 @@ mount "$EFIPART" /home/chronos/EFI -o loop,rw  2>/dev/null
 if [ ! $? -eq 0 ]; then echo "Disk $1 does not have a EFI partition (corrupted?)"; fix_grub; fi
 
 # Gets the UUID at the grub file
-OLD_UUID=`cat /home/chronos/EFI/efi/boot/grub.cfg | grep -m 1 "PARTUUID=" | awk '{print $15}' | cut -d'=' -f3`
+OLD_UUID=`cat /home/chronos/EFI/efi/boot/grub.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
 
 # Changes the grub configuration to point to the right partition
 PARTUUID=`sfdisk --part-uuid "$1" 3`
