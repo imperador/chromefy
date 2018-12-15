@@ -67,7 +67,7 @@ if [ ! -z "$3" ]; then
 fi
 
 #Checks if disk or partition
-PART_LIST = `sfdisk -lq "$chromium_image" 2>/dev/null`
+PART_LIST=`sfdisk -lq "$chromium_image" 2>/dev/null`
 PART_B=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
 PART_A=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
 PART_STATE=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
