@@ -67,11 +67,12 @@ if [ ! -z "$3" ]; then
 fi
 
 #Checks if disk or partition
-PART_B=`sfdisk -lq "$chromium_image" 2>/dev/null | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
-PART_A=`sfdisk -lq "$chromium_image" 2>/dev/null | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
-PART_STATE=`sfdisk -lq "$chromium_image" 2>/dev/null | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
+PART_LIST = `sfdisk -lq "$chromium_image" 2>/dev/null`
+PART_B=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
+PART_A=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
+PART_STATE=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
 if [ "$flag_image" = false ]; then
-    if [ ! -z `sfdisk -lq "$chromium_image" 2>/dev/null` ]; then
+    if [ ! -z "$PART_LIST" ]; then
         flag_disk=true
         if [ $(sudo sfdisk --part-type "$1" 3 2>/dev/null) != "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC" ]
             then echo "Invalid device (Chromium/Chrome not installed)"; abort_chromefy
@@ -83,6 +84,7 @@ if [ "$flag_image" = false ]; then
 fi
 
 #Backups ChromiumOS /lib directory if needed
+if [ "$flag_image" = false ]; then mount "$PART_A" /home/chronos/local; fi
 KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
 KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
 chromium_root_dir=""
@@ -95,7 +97,6 @@ fi
 if [ "$choice" = false ]; then
     chromium_root_dir="/home/chronos/RAW"
     flag_linux=false
-    if [ "$flag_image" = false ]; then mount "$PART_A" /home/chronos/local; fi
     cp -av /home/chronos/local/lib /home/chronos/RAW/
     if [ ! $? -eq 0 ]; then echo "Error while copying ChromiumOS files locally (insufficent disk space?)"; abort_chromefy; fi
 fi
