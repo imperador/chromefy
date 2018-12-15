@@ -67,7 +67,7 @@ if [ ! -z "$3" ]; then
 fi
 
 #Checks if disk or partition
-PART_LIST = `sfdisk -lq "$chromium_image" 2>/dev/null`
+PART_LIST=`sfdisk -lq "$chromium_image" 2>/dev/null`
 PART_B=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]5$`
 PART_A=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]3$`
 PART_STATE=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1}' | grep [^0-9]1$`
@@ -85,8 +85,8 @@ fi
 
 #Backups ChromiumOS /lib directory if needed
 if [ "$flag_image" = false ]; then mount "$PART_A" /home/chronos/local; fi
-KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
-KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
+KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}\+?$" | tail -1`
+KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}\+?$" | tail -1`
 chromium_root_dir=""
 flag_linux=true
 choice=false
