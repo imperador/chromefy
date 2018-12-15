@@ -85,8 +85,8 @@ fi
 
 #Backups ChromiumOS /lib directory if needed
 if [ "$flag_image" = false ]; then mount "$PART_A" /home/chronos/local; fi
-KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
-KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}$" | tail -1`
+KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}\+?$" | tail -1`
+KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}\+?$" | tail -1`
 chromium_root_dir=""
 flag_linux=true
 choice=false
