@@ -27,7 +27,7 @@ OLD_UUID_LEGACY=`cat /home/chronos/EFI/syslinux/usb.A.cfg | grep -m 1 "PARTUUID=
 # Changes the grub configuration to point to the right partition
 PARTUUID=`sfdisk --part-uuid "$1" 3`
 sed -i "s/$OLD_UUID/$PARTUUID/" /home/chronos/EFI/efi/boot/grub.cfg
-sed -i "s/$OLD_UUID/$OLD_UUID_LEGACY/" /home/chronos/EFI/syslinux/usb.A.cfg
+sed -i "s/$OLD_UUID_LEGACY/$PARTUUID/" /home/chronos/EFI/syslinux/usb.A.cfg
 
 echo "Partition $OLD_UUID changed to $PARTUUID"
 echo "You can reboot your PC!"
