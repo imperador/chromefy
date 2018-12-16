@@ -74,6 +74,7 @@ PART_STATE=`echo "$PART_LIST" | grep "^""$chromium_image""[^:]" | awk '{print $1
 if [ "$flag_image" = false ]; then
     if [ ! -z "$PART_LIST" ]; then
         flag_disk=true
+	umount "$1"?* 2>/dev/null
         if [ $(sudo sfdisk --part-type "$1" 3 2>/dev/null) != "3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC" ]
             then echo "Invalid device (Chromium/Chrome not installed)"; abort_chromefy
         fi
