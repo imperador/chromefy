@@ -22,10 +22,12 @@ if [ ! $? -eq 0 ]; then echo "Disk $1 does not have a EFI partition (corrupted?)
 
 # Gets the UUID at the grub file
 OLD_UUID=`cat /home/chronos/EFI/efi/boot/grub.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
+OLD_UUID_LEGACY=`cat /home/chronos/EFI/syslinux/usb.A.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
 
 # Changes the grub configuration to point to the right partition
 PARTUUID=`sfdisk --part-uuid "$1" 3`
 sed -i "s/$OLD_UUID/$PARTUUID/" /home/chronos/EFI/efi/boot/grub.cfg
+sed -i "s/$OLD_UUID/$OLD_UUID_LEGACY/" /home/chronos/EFI/syslinux/usb.A.cfg
 
 echo "Partition $OLD_UUID changed to $PARTUUID"
 echo "You can reboot your PC!"
