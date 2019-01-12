@@ -29,8 +29,8 @@ PARTUUID=`sfdisk --part-uuid "$1" 3`
 sed -i "s/$OLD_UUID/$PARTUUID/" /home/chronos/EFI/efi/boot/grub.cfg
 sed -i "s/$OLD_UUID_LEGACY/$PARTUUID/" /home/chronos/EFI/syslinux/usb.A.cfg
 
-echo "Partition $OLD_UUID changed to $PARTUUID"
-echo "You can reboot your PC!"
-
 fix_grub
 
+echo "EFI: Partition UUID $OLD_UUID changed to $PARTUUID"
+echo "Legacy: Partition UUID $OLD_UUID_LEGACY changed to $PARTUUID"
+echo "You can reboot your PC!"
