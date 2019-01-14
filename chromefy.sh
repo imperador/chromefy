@@ -127,7 +127,7 @@ choice=false
 if [ "$flag_image" = true ]; then choice=true;
 elif [ "$flag_disk" = true ]; then echo "Resize the system partition (y/n)?"; read_choice; fi;
 if [ "$choice" = true ]; then
-    START_NEWB=`expr $(sfdisk -o Device,End -lq /dev/sda | grep "^""$PART_GRUB"[[:space:]] | awk '{print $2}') + 1`
+    START_NEWB=`expr $(sfdisk -o Device,End -lq "$chromium_image" | grep "^""$PART_GRUB"[[:space:]] | awk '{print $2}') + 1`
     END_NEWB=`expr $START_NEWB + 8191`
     UUID_B=`sfdisk --part-uuid "$chromium_image" 5`
     START_NEWA=`expr $END_NEWB + 1`
