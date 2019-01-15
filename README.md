@@ -23,7 +23,7 @@ You can also follow us on Twitter: https://twitter.com/chromefy
 
   - An [official Chrome OS recovery image](https://cros-updates-serving.appspot.com) (downloads on the right; RECOMMENDED: eve for mid/high resolution displays, pyro for (very) low-res displays). It must be from the same chipset family (Ex: Intel, ARM or RockChip)
     > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
-  - Another Chrome OS recovery image from a TPM 1.2 device (EX: caroline; this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones). If you don't know which one, just pick caroline
+  - The TPM2 emulator (swtpm.tar) (not compatible with all Chromium kernels) or another Chrome OS recovery image from a TPM 1.2 device (EX: caroline); this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones. (If you don't know which TPM1.2 image to choose, just pick caroline)
   - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
    - The [Chromefy installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) (for the Method 1 and Method 2, the easy ways).
 
@@ -36,7 +36,12 @@ Chromefy has three installation options. The first option generates an img ready
   - Requires: One computer running Linux or Chromium.
   - It will generate a Chrome img ready to install.
 
-### Option 2: Automated Script
+### Option 2-A: Automated Script (drive)
+  - It uses a script, so the migration is easier.
+  - Requires: 2 USB sticks: The first to deploy the Chromium img on it and the second to store the two recovery files.
+  - The script can downsize your sdX5 drive and resize sdX3 with the generated free space (will ask first).
+  
+### Option 2-B: Automated Script (partition)
   - It uses a script, so the migration is easier.
   - Requires: 2 USB sticks: The first to deploy the Chromium img on it and the second to store the two recovery files.
   - As said before, you will need to resize the third partition of your sdX drive (EX: sda3 inside sda, if your main drive is sda). In this method you can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space.
@@ -61,7 +66,7 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your two recovery images (e.g Eve and Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). Place all the files in one location. Downloads is a good idea.
+Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). Place all the files in one location. Downloads is a good idea.
 
 In the next step you need to replace '{path}' with the location of all these files. If you put them in Downloads then {path} would be replaced with 'home/chronos/user/Downloads'.
 If the files are in another folder, replace it with the other folder location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
@@ -69,11 +74,14 @@ If the files are in another folder, replace it with the other folder location. I
 
 Now open a terminal (if you’re using ChromiumOS press CTRL + ALT + T, then type the command shell.) For any other Linux OS a normal terminal is fine, and then type the following commands:
 
-
 ```sh
 sudo su
 cd {path}
-sudo  bash  chromefy.sh  chromium.img  recovery.bin  caroline.bin  
+sudo  bash  chromefy.sh  chromium.img  recovery.bin  caroline.bin
+```
+or
+```
+sudo  bash  chromefy.sh  chromium.img  recovery.bin  swtpm.tar
 ```
 
   > Reminder: {path} is the folder where you saved your files
@@ -109,16 +117,21 @@ Flash the selected **Chromium** OS build on the first USB, boot into the live US
 ```sh
 sudo /usr/sbin/chromeos-install --dst YOURDRIVE (Ex: /dev/sda)
 ```
-- Now make sure that your chromium HDD/SSD installation is working before proceeding. Also save your chosen recovery image (that we will be calling chosenImg.bin), caroline recovery image (here called carolineImg.bin) and the [Installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) to the second USB stick.
+- Now make sure that your chromium HDD/SSD installation is working before proceeding. Also save your chosen recovery image (that we will be calling chosenImg.bin), swtpm.tar or caroline recovery image (here called carolineImg.bin) and the [Installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) to the second USB stick.
 
-Resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB (suggestion: search about using Gparted live USB to resize it). And remember: You can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space. 
+OPTION 2B ONLY: Resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB (suggestion: search about using Gparted live USB to resize it). And remember: You can either downsize sdX1 (data partition) or delete the sdX5 partition (we won't need it) to get more unallocated space. 
 
    > Multiboot users: You must use the ROOT-A partition instead of your third partition (sda3). 
    
 After this, connect both USB sticks to you computer and boot from your live USB again (with Chromium), make sure you have your Chrome OS images available (on the second USB stick) and go to the folder where you downloaded the chromefy script and run it with the following command (considering your system partition as /dev/sda3):
 
+OPTION 2A:
 ```sh
-sudo bash chromefy.sh /dev/sda3 /path/to/chosenImg.bin /path/to/carolineImg.bin
+sudo bash chromefy.sh /dev/sda /path/to/chosenImg.bin /path/to/carolineImg.bin_OR_swtpm.tar
+```
+OPTION 2B:
+```sh
+sudo bash chromefy.sh /dev/sda3 /path/to/chosenImg.bin /path/to/carolineImg.bin_OR_swtpm.tar
 ```
 
 Don't leave live USB yet, make a powerwash (manually) by typing
