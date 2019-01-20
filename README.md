@@ -25,7 +25,7 @@ You can also follow us on Twitter: https://twitter.com/chromefy
     > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
   - The TPM2 emulator (swtpm.tar) (not compatible with all Chromium kernels) or another Chrome OS recovery image from a TPM 1.2 device (EX: caroline); this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones. (If you don't know which TPM1.2 image to choose, just pick caroline)
   - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
-   - The [Chromefy installation script](https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh) (for the Method 1 and Method 2, the easy ways).
+   - The [Chromefy.sh installation script](https://github.com/imperador/chromefy/releases) (for the Method 1 and Method 2, the easy ways).
 
 ## Installation Methods
 
