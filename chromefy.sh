@@ -97,8 +97,8 @@ fi
 if [ "$flag_image" = false ]; then mount "$PART_A" /home/chronos/local; fi
 KERNEL_LOCAL=`ls /lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}[^ ]*$" | tail -1`
 KERNEL_CHROMIUM=`ls /home/chronos/local/lib/modules/ | egrep "^([0-9]{1,}\.)+[0-9]{1,}[^ ]*$" | tail -1`
-VTPM_BUILTIN=`cat /home/chronos/local/lib/modules/"$KERNEL_CHROMIUM"/modules.builtin | grep tpm_vtpm_proxy.ko`
-VTPM_MODULE=`cat /home/chronos/local/lib/modules/"$KERNEL_CHROMIUM"/modules.dep | grep tpm_vtpm_proxy.ko`
+VTPM_BUILTIN=`cat /home/chronos/local/lib/modules/"$KERNEL_CHROMIUM"/modules.builtin 2>/dev/null | grep tpm_vtpm_proxy.ko`
+VTPM_MODULE=`cat /home/chronos/local/lib/modules/"$KERNEL_CHROMIUM"/modules.dep 2>/dev/null | grep tpm_vtpm_proxy.ko`
 if [ "$flag_vtpm" = true ] && [ -z "$VTPM_BUILTIN" ] && [ -z "$VTPM_MODULE" ]; then
     echo "This Chromium image does not support VTPM proxy, use different image or TPM replacement method"; abort_chromefy
 fi
@@ -186,8 +186,8 @@ rm -rf /home/chronos/local/lib/modules/
 cp -av "$chromium_root_dir"/lib/firmware /home/chronos/local/lib/
 cp -av "$chromium_root_dir"/lib/modules/ /home/chronos/local/lib/
 rm -rf /home/chronos/local/etc/modprobe.d/alsa*.conf
-echo "Leave selinux on enforcing? (Won't break SafetyNet without developer mode, but might cause issues with android apps)"
-echo "Answer no if unsure"
+echo; echo "Leave selinux on enforcing? (Won't break SafetyNet without developer mode, but might cause issues with android apps)"
+echo "Answer no if unsure (y/n)"
 read_choice
 if [ "$choice" = false ]; then sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config; fi
 
