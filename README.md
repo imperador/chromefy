@@ -66,7 +66,7 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). Place all the files in one location. Downloads is a good idea.
+Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/raw/master/chromefy.sh). Place all the files in one location. Downloads is a good idea.
 
 In the next step you need to replace '{path}' with the location of all these files. If you put them in Downloads then {path} would be replaced with 'home/chronos/user/Downloads'.
 If the files are in another folder, replace it with the other folder location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
