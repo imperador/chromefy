@@ -21,7 +21,7 @@ You can also follow us on Twitter: https://twitter.com/chromefy
 
 ## Required Files
 
-  - An [official Chrome OS recovery image](https://cros-updates-serving.appspot.com) (downloads on the right; RECOMMENDED: eve for mid/high resolution displays, pyro for (very) low-res displays). It must be from the same chipset family (Ex: Intel, ARM or RockChip)
+  - An [official Chrome OS recovery image](https://cros-updates-serving.appspot.com) (downloads on the right; RECOMMENDED: eve (best) or pyro are the most complete images). It must be from the same chipset vendor (Ex: Intel, ARM or RockChip)
     > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
   - The TPM2 emulator ([swtpm.tar](https://github.com/imperador/chromefy/raw/master/swtpm.tar)) (not compatible with all Chromium kernels) or another Chrome OS recovery image from a TPM 1.2 device (EX: caroline); this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones. (If you don't know which TPM1.2 image to choose, just pick caroline)
   - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
@@ -66,7 +66,7 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases/download/v1.1/chromefy.sh). Place all the files in one location. Downloads is a good idea.
+Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases). Place all the files in one location. Downloads is a good idea.
 
 In the next step you need to replace '{path}' with the location of all these files. If you put them in Downloads then {path} would be replaced with 'home/chronos/user/Downloads'.
 If the files are in another folder, replace it with the other folder location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
