@@ -243,6 +243,22 @@ if [ "$flag_vtpm" = true ]; then
 EOL
 fi
 
+#Fix ChromeOS installer (Automatically skip postinstall and fix UUIDs)
+read -r -d '' CHROMEOS_INSTALL_FIX_GRUB <<'EOF'
+  do_post_install; sync; cleanup; trap - EXIT
+  echo; echo "Changing GRUB UUIDs..."; umount /home/chronos/local 2>/dev/null; mkdir -p /home/chronos/local 2>/dev/null; DST="${DST}"
+  EFIPART=`flock "${DST}" sfdisk -lq "${DST}" 2>/dev/null | grep "^""${DST}""[^:]" | awk '{print $1}' | grep [^0-9]12$`
+  mount "$EFIPART" /home/chronos/local 2>/dev/null
+  OLD_UUID=`cat /home/chronos/local/efi/boot/grub.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
+  OLD_UUID_LEGACY=`cat /home/chronos/local/syslinux/usb.A.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
+  PARTUUID=`flock "${DST}" sfdisk --part-uuid "${DST}" 3`; sed -i "s/$OLD_UUID/$PARTUUID/" /home/chronos/local/efi/boot/grub.cfg
+  sed -i "s/$OLD_UUID_LEGACY/$PARTUUID/" /home/chronos/local/syslinux/usb.A.cfg
+  sync; umount /home/chronos/local 2>/dev/null; rmdir /home/chronos/local 2>/dev/null
+  echo "EFI: Partition UUID $OLD_UUID changed to $PARTUUID"; echo "Legacy: Partition UUID $OLD_UUID_LEGACY changed to $PARTUUID"; echo
+EOF
+sed -i 's/DEFINE_boolean skip_postinstall ${FLAGS_FALSE}/DEFINE_boolean skip_postinstall ${FLAGS_TRUE}/g' /home/chronos/local/usr/sbin/chromeos-install
+sed -i "s/^[ \t]*do_post_install[ \t]*\$/$CHROMEOS_INSTALL_FIX_GRUB/g" /home/chronos/local/usr/sbin/chromeos-install
+
 #Expose the internal camera to android container
 internal_camera=`dmesg | grep uvcvideo -m 1 | awk -F '[()]' '{print $2}'`
 original_camera=`sed -nr 's,^camera0.module0.usb_vid_pid=(.*),\1,p'  /home/chronos/local/etc/camera/camera_characteristics.conf`
