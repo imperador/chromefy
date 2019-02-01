@@ -117,7 +117,9 @@ fi
 if [ "$choice" = false ]; then
     chromium_root_dir="/home/chronos/RAW"
     flag_linux=false
+    mkdir -p /home/chronos/RAW/usr/lib64
     cp -av /home/chronos/local/lib /home/chronos/RAW/
+    cp -av /home/chronos/local/usr/lib64/{dri,va} /home/chronos/RAW/usr/lib64/
     if [ ! $? -eq 0 ]; then echo "Error while copying ChromiumOS files locally (insufficent disk space?)"; abort_chromefy; fi
 fi
 umount /home/chronos/local 2>/dev/null
@@ -183,8 +185,8 @@ umount /home/chronos/image
 #Copies modules and certificates from ChromiumOS
 rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/ 
-cp -av "$chromium_root_dir"/lib/firmware /home/chronos/local/lib/
-cp -av "$chromium_root_dir"/lib/modules/ /home/chronos/local/lib/
+cp -av "$chromium_root_dir"/lib /home/chronos/local/
+cp -nav "$chromium_root_dir"/usr/lib64/{dri,va} /home/chronos/local/usr/lib64/ #Extra GPU drivers
 rm -rf /home/chronos/local/etc/modprobe.d/alsa*.conf
 echo; echo "Leave selinux on enforcing? (Won't break SafetyNet without developer mode, but might cause issues with android apps)"
 echo "Answer no if unsure (y/n)"
