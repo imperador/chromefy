@@ -256,8 +256,10 @@ read -r -d '' CHROMEOS_INSTALL_FIX_GRUB <<'EOF'
   sync; umount /home/chronos/local 2>/dev/null; rmdir /home/chronos/local 2>/dev/null
   echo "EFI: Partition UUID $OLD_UUID changed to $PARTUUID"; echo "Legacy: Partition UUID $OLD_UUID_LEGACY changed to $PARTUUID"; echo
 EOF
+CHROMEOS_INSTALL_FIX_GRUB="${CHROMEOS_INSTALL_FIX_GRUB//\\/\\\\}"
+CHROMEOS_INSTALL_FIX_GRUB="${CHROMEOS_INSTALL_FIX_GRUB//$'\n'/\\n}"
 sed -i 's/DEFINE_boolean skip_postinstall ${FLAGS_FALSE}/DEFINE_boolean skip_postinstall ${FLAGS_TRUE}/g' /home/chronos/local/usr/sbin/chromeos-install
-sed -i "s/^[ \t]*do_post_install[ \t]*\$/$CHROMEOS_INSTALL_FIX_GRUB/g" /home/chronos/local/usr/sbin/chromeos-install
+sed -i "s/^[ \t]*do_post_install[ \t]*\$/${CHROMEOS_INSTALL_FIX_GRUB////\\/}/g" /home/chronos/local/usr/sbin/chromeos-install
 
 #Expose the internal camera to android container
 internal_camera=`dmesg | grep uvcvideo -m 1 | awk -F '[()]' '{print $2}'`
