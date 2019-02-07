@@ -1,4 +1,4 @@
-# chromefy
+# PRoject Croissant
 Transforming Chromium to Chrome
 
 You can find us at the Telegram Group:
@@ -29,7 +29,7 @@ You can also follow us on Twitter: https://twitter.com/CroissantDev
 
 ## Installation Methods
 
-Chromefy has three installation options. The first option generates an img ready to deploy into your usb stick and then you can boot from it to install Chrome at your computer. The last two options will probably require you to resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB; I suggest using Gparted live USB to resize it; 
+Project Croissant has three installation options. The first option generates an img ready to deploy into your usb stick and then you can boot from it to install Chrome at your computer. The last two options will probably require you to resize the third partition of your sdX drive (EX: sda3 inside sda) from its current size to atleast 4GB; I suggest using Gparted live USB to resize it; 
 
 ### Option 1: Automated generation of Chrome img
   - It uses a script and you don't need to resize partitions.
@@ -62,7 +62,7 @@ With the automated script method you can either generate your own Chrome img rea
 
 ### Option 1: Automated Script - Generating your own Chrome img:
 
-Here you will generate your img and then deploy it to a usb stick, this will allow you to install it on your computer. If you already have a Chromefy-generated ChromeOS img, you can deploy it to a usb stick, boot from it at your computer and then jump to the ***Installing an img at your computer***. We won't provide the imgs.
+Here you will generate your img and then deploy it to a usb stick, this will allow you to install it on your computer. If you already have a Project Croissant generated ChromeOS img, you can deploy it to a usb stick, boot from it at your computer and then jump to the ***Installing an img at your computer***. We won't provide the imgs.
 
 #### Generating the img
 
@@ -90,7 +90,7 @@ After finishing the process, you will have the **chromium.img**. It is now a ful
 
 #### Installing an img at your computer
 
-If you already have a Chromefy-generated ChromeOS img, you can deploy it to a usb stick and then just boot from it at your computer.
+If you already have a Project Croissant generated ChromeOS img, you can deploy it to a usb stick and then just boot from it at your computer.
 
 When the login screen appears, press "CTRL + ALT + F2" and type the following commands:
 
@@ -208,7 +208,7 @@ Now press F10. If it boots coorectly, you are ready to go
 Not everyone is willing to wipe their hard drives just to install [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) as a base, and for those people we have made a handy multiboot guide. You can check it out here:
 [MultiBoot Guide](https://docs.google.com/document/d/1uBU4IObDI8IFhSjeCMvKw46O4vKCnfeZTGF7Jx8Brno/edit?usp=sharing)
 
-Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial Chromefy upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
+Chainloading is not a requirement with ArnoldTheBats Chromium, however you may need to when you make the initial ChromeOS upgrade. Also remember to save your partition layout in between upgrades to newer ChromeOS versions, and also when you initially upgrade to ChromeOS otherwise it will not find the State partition which is needed for a successful boot.
 
 ---
 ## Updating ChromeOS (for the Method 3)
@@ -256,7 +256,7 @@ Bypassing TPM for select recovery images (Eve, Fizz, etc)
 ---
 
 ## Credits:
-  - [imperador](https://github.com/imperador) for the chromefy idea and the scripts
+  - [imperador](https://github.com/imperador) for the Project Croissant idea and the scripts
   - [TCU14](https://github.com/TCU14) for upgrading, and the MultiBoot guide
   - [alesimula](https://github.com/alesimula) for the installation script and also for the XDA Tutorial
   - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration and also for creating and managing the Telegram Group
