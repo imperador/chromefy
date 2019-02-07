@@ -5,7 +5,7 @@ You can find us at the Telegram Group:
 https://t.me/chromeosforpc
    > Please, ask your questions at the group and don't PM the admins. :)
    
-You can also follow us on Twitter: https://twitter.com/chromefy
+You can also follow us on Twitter: https://twitter.com/CroissantDev
 
 ## Observations
 
