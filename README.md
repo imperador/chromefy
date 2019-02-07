@@ -1,4 +1,4 @@
-# PRoject Croissant
+# Project Croissant
 Transforming Chromium to Chrome
 
 You can find us at the Telegram Group:
