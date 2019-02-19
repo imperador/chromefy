@@ -1,0 +1,1 @@
+SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHPAD}=="1",    ATTRS{name}=="bcm5974",  ENV{POWERD_ROLE}="internal_touchpad"

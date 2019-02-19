@@ -189,9 +189,11 @@ cp -av "$chromium_root_dir"/{lib,boot} /home/chronos/local/
 cp -nav "$chromium_root_dir"/usr/lib64/{dri,va} /home/chronos/local/usr/lib64/ #Extra GPU drivers
 rm -rf /home/chronos/local/etc/modprobe.d/alsa*.conf
 
-# enable bcm43xx wifi
-cat > /home/chronos/local/lib/modprobe.d/blacklist.conf <<EOF
-lacklist.conf
+echo "Is your wireless card bcm43xx? Answer no if unsure (y/n)"
+read_choice
+if [ "$choice" = true ]; then
+    # enable bcm43xx wifi
+    cat > /home/chronos/local/lib/modprobe.d/blacklist.conf <<EOF
 blacklist b43
 install b43 /bin/true
 blacklist b43legacy
@@ -211,9 +213,13 @@ install brcmutil /bin/true
 blacklist bcma
 install bcma /bin/true
 EOF
+fi
 
-# enable trackpad
-cat > /home/chronos/local/lib/udev/rules.d/60-evdev-apple-touchpad.rules <<EOF
+echo "Is your computer MacBook/Pro/Air? (y/n)"
+read_choice
+if [ "$choice" = true ]; then
+    # enable trackpad
+    cat > /home/chronos/local/lib/udev/rules.d/60-evdev-apple-touchpad.rules <<EOF
 ACTION=="remove", GOTO="evdev_apple_end"
 KERNEL!="event*", GOTO="evdev_apple_end"
 
@@ -225,9 +231,11 @@ ENV{ID_INPUT_TOUCHPAD}=="1", \
 
 LABEL="evdev_apple_end"
 EOF
-cat > /home/chronos/local/lib/udev/rules.d/90-powerd-id-apple-touchpad.rules <<EOF
+
+    cat > /home/chronos/local/lib/udev/rules.d/90-powerd-id-apple-touchpad.rules <<EOF
 SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHPAD}=="1",    ATTRS{name}=="bcm5974",  ENV{POWERD_ROLE}="internal_touchpad"
 EOF
+fi
 
 echo; echo "Leave selinux on enforcing? (Won't break SafetyNet without developer mode, but might cause issues with android apps)"
 echo "Answer no if unsure (y/n)"
