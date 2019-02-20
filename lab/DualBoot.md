@@ -2,7 +2,7 @@
 
 For any question, you can find us on telegram: https://t.me/chromeosforpc
 
-    >Please, ask your questions at the group and don't PM the admins. :)
+    Please, ask your questions at the group and don't PM the admins. :)
 
 # Requirements
   - A generated ChromeOS image from our regular method, you can find it [here](https://github.com/imperador/chromefy/blob/master/README.md).
@@ -31,3 +31,6 @@ For any question, you can find us on telegram: https://t.me/chromeosforpc
   - Now boot into rEFInd and you will see a FydeOS entry, just click on it.
 
       >You have ChromeOS Dual Booted, enjoy it. Don't forget to give us your feedback on the telegram group
+      
+# A big thanks to the [FydeOS Team](http://fydeos.com/) for the install script.      
+
