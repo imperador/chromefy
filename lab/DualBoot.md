@@ -6,9 +6,10 @@ For any question, you can find us on telegram: https://t.me/chromeosforpc
 # Requirements
   - A generated ChromeOS image from our regular method, you can find it [here](https://github.com/imperador/chromefy/blob/master/README.md).
   - You need to have [rEFInd](http://www.rodsbooks.com/refind/) installed on your hard drive. There are many tutorials on the web teaching how to install it.
-  - Download both [dualboot.sh](https://raw.githubusercontent.com/imperador/chromefy/master/lab/dualboot.sh) and [dualboot.bin](https://github.com/imperador/chromefy/raw/master/lab/dualboot.bin) and place them on the same folder as your ChromeOS image.
 
 # Steps
+
+  - Download both [dualboot.sh](https://raw.githubusercontent.com/imperador/chromefy/master/lab/dualboot.sh) and [dualboot.bin](https://github.com/imperador/chromefy/raw/master/lab/dualboot.bin) and place them on the same folder as your ChromeOS image.
 
   - Open a terminal (if you’re using ChromiumOS press CTRL + ALT + T, then type the command shell.) For any other Linux OS a normal terminal is fine, and then type the following commands:
 
