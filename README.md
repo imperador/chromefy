@@ -259,7 +259,7 @@ Bypassing TPM for select recovery images (Eve, Fizz, etc)
   - [imperador](https://github.com/imperador) for the Project Croissant idea and the scripts
   - [TCU14](https://github.com/TCU14) for upgrading, and the MultiBoot guide
   - [alesimula](https://github.com/alesimula) for the installation script and also for the XDA Tutorial
-  - Diogo from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration and also for creating and managing the Telegram Group
+  - [DiogoSilva48] from the [Telegram Group](https://t.me/chromeosforpc) for the corrections on the firmware migration and also for creating and managing the Telegram Group
   - [sublinhado](https://github.com/sublinhado) for writing down the steps needed for the TPM bypass method
   - Dnim Ecaep from the [Telegram Group](https://t.me/chromeosforpc) for the shell command to change the SELINUX to permissive
   - Danii from the [Telegram Group](https://t.me/chromeosforpc) for the work on the TPM bypass method and TPM emulation method
