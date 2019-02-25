@@ -1,0 +1,10 @@
+ACTION=="remove", GOTO="evdev_apple_end"
+KERNEL!="event*", GOTO="evdev_apple_end"
+
+ENV{ID_INPUT_TOUCHPAD}=="1", \
+  ATTRS{name}=="bcm5974", \
+  ENV{EVDEV_ABS_00}="::94", ENV{EVDEV_ABS_01}="::92", \
+  ENV{EVDEV_ABS_35}="::94", ENV{EVDEV_ABS_36}="::92", \
+  RUN{builtin}+="keyboard", GOTO="evdev_apple_end"
+
+LABEL="evdev_apple_end"
