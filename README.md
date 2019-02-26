@@ -1,8 +1,6 @@
 # Project Croissant
 Transforming Chromium to Chrome
 
-**This fork is edited for MacBook which enables the bcm43xx and trackpad**
-
 You can find us at the Telegram Group:
 https://t.me/chromeosforpc
    > Please, ask your questions at the group and don't PM the admins. :)
