@@ -27,7 +27,7 @@ You can also follow us on Twitter: https://twitter.com/CroissantDev
     > You can use [THIS LIST](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) to search for your processor, and then look at the internet which one is the best (the closest, the better).
   - The TPM2 emulator ([swtpm.tar](https://github.com/imperador/chromefy/raw/master/swtpm.tar)) (not compatible with all Chromium kernels) or another Chrome OS recovery image from a TPM 1.2 device (EX: caroline); this is only needed if using an image from TPM2 device to fix a login issue, which is most likely the case for newer ones. (If you don't know which TPM1.2 image to choose, just pick caroline)
   - An image from a Chromium OS distribution (EX: [ArnoldTheBats Builds](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc)).
-   - The [Chromefy.sh installation script](https://github.com/imperador/chromefy/releases) (for the Method 1 and Method 2, the easy ways).
+   - The [Croissant.sh installation script](https://github.com/imperador/chromefy/releases) (for the Method 1 and Method 2, the easy ways).
 
 ## Installation Methods
 
@@ -68,7 +68,7 @@ Here you will generate your img and then deploy it to a usb stick, this will all
 
 #### Generating the img
 
-Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Chromefy.sh script (https://github.com/imperador/chromefy/releases). Place all the files in one location. Downloads is a good idea.
+Log into a Linux or Chromium OS computer. Download your Chromium image (e.g Arnold the bat), your ChromeOS recovery image (e.g Eve), TPM2 emulator (swtpm.tar) or TPM1.2 ChromeOS recovery image (e.g Caroline [https://cros-updates-serving.appspot.com]) and the Croissant.sh script (https://github.com/imperador/chromefy/releases). Place all the files in one location. Downloads is a good idea.
 
 In the next step you need to replace '{path}' with the location of all these files. If you put them in Downloads then {path} would be replaced with 'home/chronos/user/Downloads'.
 If the files are in another folder, replace it with the other folder location. If you don't know how to discover the path, internet is your friend, you can learn how to discover it.
@@ -79,11 +79,11 @@ Now open a terminal (if you’re using ChromiumOS press CTRL + ALT + T, then typ
 ```sh
 sudo su
 cd {path}
-sudo  bash  chromefy.sh  chromium.img  recovery.bin  caroline.bin
+sudo  bash  croissant.sh  chromium.img  recovery.bin  caroline.bin
 ```
 or
 ```
-sudo  bash  chromefy.sh  chromium.img  recovery.bin  swtpm.tar
+sudo  bash  croissant.sh  chromium.img  recovery.bin  swtpm.tar
 ```
 
   > Reminder: {path} is the folder where you saved your files
@@ -125,15 +125,15 @@ OPTION 2B ONLY: Resize the third partition of your sdX drive (EX: sda3 inside sd
 
    > Multiboot users: You must use the ROOT-A partition instead of your third partition (sda3). 
    
-After this, connect both USB sticks to you computer and boot from your live USB again (with Chromium), make sure you have your Chrome OS images available (on the second USB stick) and go to the folder where you downloaded the chromefy script and run it with the following command (considering your system partition as /dev/sda3):
+After this, connect both USB sticks to you computer and boot from your live USB again (with Chromium), make sure you have your Chrome OS images available (on the second USB stick) and go to the folder where you downloaded the croissant script and run it with the following command (considering your system partition as /dev/sda3):
 
 OPTION 2A:
 ```sh
-sudo bash chromefy.sh /dev/sda /path/to/chosenImg.bin /path/to/carolineImg.bin_OR_swtpm.tar
+sudo bash croissant.sh /dev/sda /path/to/chosenImg.bin /path/to/carolineImg.bin_OR_swtpm.tar
 ```
 OPTION 2B:
 ```sh
-sudo bash chromefy.sh /dev/sda3 /path/to/chosenImg.bin /path/to/carolineImg.bin_OR_swtpm.tar
+sudo bash croissant.sh /dev/sda3 /path/to/chosenImg.bin /path/to/carolineImg.bin_OR_swtpm.tar
 ```
 
 Don't leave live USB yet, make a powerwash (manually) by typing
