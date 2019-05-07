@@ -10,7 +10,7 @@ You can also follow us on Twitter: https://twitter.com/CroissantDev
 ## Observations
 
   - You need a Chromium installation running for the Methods 2 and 3
-    > We strongly recommend using [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) Stable builds.
+    > We strongly recommend using [ArnoldTheBats Chromium](https://chromium.arnoldthebat.co.uk/index.php?dir=special&order=modified&sort=desc) Stable (Vanilla) builds.
     > Just deploy the img to a USB Stick, [Rufus](https://rufus.ie/en_IE.html) and similar programs will do the work.
   - You have to be logged in (because if you don't, the initial setup won't work).
   - We are not responsible for any damage made to your computer by you or by your dog.
