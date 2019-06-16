@@ -105,7 +105,7 @@ When the process finish, turn off your computer, remove your usb stick and turn 
 
 #### Fixing Grub
 
-If it doesn't work after your reboot. Just boot into your USB stick again, make sure you have an internet connection, go to the shell command line and type this command:
+If it doesn't work after your reboot, just boot into your USB stick again, make sure you have an internet connection, go to the shell command line and type this command:
 
 ```sh
 curl  -L  https://goo.gl/HdjwAZ   |  sudo  bash  -s  /dev/sda
