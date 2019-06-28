@@ -77,7 +77,7 @@ Now open a terminal (if you’re using ChromiumOS press CTRL + ALT + T, then typ
 ```sh
 sudo su
 cd {path}
-sudo  bash  croissant.sh  chromium.img  recovery.bin  caroline.bin
+bash  croissant.sh  chromium.img  recovery.bin  caroline.bin
 ```
 or
 ```
