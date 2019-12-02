@@ -19,6 +19,7 @@ if [ "$flag_image" = false ] && [ ! -e "/usr/sbin/chromeos-install" ]; then echo
 if [ ! -d /home/chronos ]; then mkdir /home/chronos; fi
 if [ ! -d /home/chronos/dualboot ]; then mkdir /home/chronos/dualboot; fi
 if [ ! -d /home/chronos/RAW ]; then mkdir /home/chronos/RAW; fi
+if [ ! -d /home/chronos/local ]; then mkdir /home/chronos/local; fi
 
 function cleanup_chromefy {
     sync
