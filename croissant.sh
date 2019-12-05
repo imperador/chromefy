@@ -310,6 +310,11 @@ CHROMEOS_INSTALL_FIX_GRUB="${CHROMEOS_INSTALL_FIX_GRUB//$'\n'/\\n}"
 sed -i 's/DEFINE_boolean skip_postinstall ${FLAGS_FALSE}/DEFINE_boolean skip_postinstall ${FLAGS_TRUE}/g' /home/chronos/local/usr/sbin/chromeos-install
 sed -i "s/^[ \t]*do_post_install[ \t]*\$/${CHROMEOS_INSTALL_FIX_GRUB////\\/}/g" /home/chronos/local/usr/sbin/chromeos-install
 
+#Fix write_gpt.sh to create an ESP that's big enough
+tmp_esp_size="$(grep 'PARTITION_SIZE_EFI_SYSTEM' /home/chronos/local/usr/sbin/write_gpt.sh|tail -n1)"
+esp_size="${tmp_esp_size#*=}"
+sed -i "s/$esp_size/536870912/g" /home/chronos/local/usr/sbin/write_gpt.sh
+
 #Expose the internal camera to android container
 internal_camera=`dmesg | grep uvcvideo -m 1 | awk -F '[()]' '{print $2}'`
 original_camera=`sed -nr 's,^camera0.module0.usb_vid_pid=(.*),\1,p'  /home/chronos/local/etc/camera/camera_characteristics.conf`
