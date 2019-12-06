@@ -296,9 +296,9 @@ fi
 read -r -d '' CHROMEOS_INSTALL_FIX_GRUB <<'EOF'
   do_post_install; sync; cleanup; trap - EXIT
   echo; echo "Changing GRUB UUIDs..."; umount /home/chronos/local 2>/dev/null; mkdir -p /home/chronos/local 2>/dev/null;SRC="${SRC}";DST="${DST}"
-  SRC_EFIPART=`flock "${SRC}" sfdisk -lq "${SRC}" 2>/dev/null | grep "^""${}""[^:]" | awk '{print $1}' | grep [^0-9]12$`
+  SRC_EFIPART=`flock "${SRC}" sfdisk -lq "${SRC}" 2>/dev/null | grep "^""${SRC}""[^:]" | awk '{print $1}' | grep [^0-9]12$`
   EFIPART=`flock "${DST}" sfdisk -lq "${DST}" 2>/dev/null | grep "^""${DST}""[^:]" | awk '{print $1}' | grep [^0-9]12$`
-  dd if=$SRC_EFIPART of=$EFIPART bs=4k status=progress
+  dd if="${SRC_EFIPART}" of="${EFIPART}" bs=4k status=progress
   mount "$EFIPART" /home/chronos/local 2>/dev/null
   OLD_UUID=`cat /home/chronos/local/efi/boot/grub.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
   OLD_UUID_LEGACY=`cat /home/chronos/local/syslinux/usb.A.cfg | grep -m 1 "PARTUUID=" | awk -v FS="(PARTUUID=)" '{print $2}' | awk '{print $1}'`
