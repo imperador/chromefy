@@ -218,7 +218,7 @@ fi
 if [ "$choice" = false ]; then # no point in asking what wireless card is if user just told us
 	echo "Is it ath10k? Answer no if unsure (y/n)"
 	read_choice
-	if [ "$choice" = true ] && [ -f /home/chronos/lib/firmware/ath10k/QCA9377/hw1.0/firmware-6.bin ]; then
+	if [ "$choice" = true ] && [ -f /home/chronos/local/lib/firmware/ath10k/QCA9377/hw1.0/firmware-6.bin ]; then
 		unlink /home/chronos/local/lib/firmware/ath10k/QCA9377/hw1.0/firmware-6.bin
 	fi
 fi
