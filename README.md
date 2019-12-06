@@ -111,6 +111,16 @@ If it doesn't work after your reboot, just boot into your USB stick again, make 
 curl  -L  https://goo.gl/HdjwAZ   |  sudo  bash  -s  /dev/sda
 ```
 
+### Updating Chrome OS
+
+To update Chrome OS, repeat the process, but when you run ```chromeos-install``` make sure to add the flag ```--preserve_stateful``` like so:
+
+```chromeos-install  --dst  /dev/sda  --skip_postinstall --preserve_stateful```
+
+This ensures that existing Chrome OS user data is not wiped.
+
+---
+
 ### Option 2: Automated Script - Applying Chrome to Chromium:
 
 Flash the selected **Chromium** OS build on the first USB, boot into the live USB and install it on your HDD/SSD by typing the following command on the shell (keep in mind this will wipe your HDD, so backup everything you need and don't blame us later)
@@ -141,6 +151,17 @@ sudo mkfs.ext4 YOURDATAPARTITION(Ex: /dev/sda1)
 ```
 
 You can now reboot and enjoy your new "chromebook"
+
+To update,  repeat the process, but:
+
+
+	1. when you run chromeos-install make sure to add the flag --preserve_stateful like so:
+
+		* chromeos-install  --dst  /dev/sda  --skip_postinstall --preserve_stateful
+
+	2. Run Option 2B, *even if* you installed with option 2A.
+
+	3. Omit the last step where you run mkfs.ext4
 
 ---
 
@@ -195,9 +216,9 @@ Type "sync" and press Enter
 Now restart your computer. When the screen with the boot options appear (the grub), press 'e' FAST (or it will boot into the chromium). You will have to change the root for:
 root=/dev/sda5
 
-Now press F10. If it boots coorectly, you are ready to go
+Now press F10. If it boots corectly, you are ready to go
  
-# ADITIONAL:
+# ADDITIONAL:
 
   - Using ChromeOS with other Operating systems (Multiboot)
   - Updating ChromeOS (for the Method 2)
