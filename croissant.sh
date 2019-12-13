@@ -60,10 +60,10 @@ else chromium_image="$1"; fi
 
 if [ ! -f "$2" ]; then echo "Image $2 not found"; abort_chromefy; fi
 chromeos_image=`losetup --show -fP "$2"`
-if [ -b "$chromeos_image"p3 ]
+if [ -b "$chromeos_image"p3 ]; then
     mount "$chromeos_image"p3 /home/chronos/image -o loop,ro  2>/dev/null
 else
-    mount "$chromeos_image"p1 /home/chronos/image -o loop,ro  2>/dev/null
+    mount $2 /home/chronos/image -o loop,ro  2>/dev/null
 fi
 if [ ! $? -eq 0 ]; then echo "Image $2 does not have a system partition (corrupted?)"; abort_chromefy; fi
 
