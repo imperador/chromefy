@@ -267,4 +267,5 @@ Bypassing TPM for select recovery images (Eve, Fizz, etc)
 ## Big Thanks:
   - [allanin](https://github.com/allanin) for all of his ideas on Arnoldthebat discussion, most part of the scripts here is based on his ideas
   - [arnold](https://chromium.arnoldthebat.co.uk) for his awesome builds
+  - [stefanberger](https://github.com/stefanberger/) for swtpm, a Libtpms-based TPM emulator we use.
   - ++ some more that I will add soon (remind me if I forgot someone)
