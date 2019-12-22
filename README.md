@@ -220,12 +220,15 @@ Find and download the updated recovery image for the device you used at chrome.q
 
 Now type in the following commands in the Linux terminal:
 ```sh
-losetup -fP /home/chronos/user/Downloads/chromeos.bin
+losetup -fP /home/chronos/user/Downloads/chromeos_image.bin
+losetup -fP /home/chronos/user/Downloads/chromium_image.bin
 mount /dev/sda5 /home/chronos/local
+losetup
 ```
-Now type losetup to get a list of Loop devices, find the one that corresponds to your ChromeOS Image and than type:
+The last call of losetup without paramaters prints a list of Loop devices, find the one that corresponds to your ChromeOS and Chromium Image and then type:
 ```sh
-mount /dev/loop{number}p3 /home/chronos/image -o loop,ro
+mount /dev/loop{chromeos_number}p3 /home/chronos/image -o loop,ro
+mount /dev/loop{chromium_number}p3 /home/chronos/native -o loop,ro
 ```
 
 ### Updating both ChromeOS and Chromium Native: The actual upgrade
@@ -246,8 +249,10 @@ Change in /home/chronos/local/etc/selinux/config the word enforcing to permissiv
 ```sh
 sudo sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config
 ```
----
 
+If you use multiboot, do not forget to change /usr/sbin/write_gpt.sh again. For details, see the multiboot section above.
+
+---
 ## Resolving Problems With Login
 Bypassing TPM for select recovery images (Eve, Fizz, etc)
 - [Instructions](https://docs.google.com/document/d/1mjOE4qnIxUcnnb5TjexQrYVFOU0eB5VGRFQlFDrPBhU/edit): Done automatically using the script above so long as your second argument is a TPM2.0 image(Such as Eve or Fizz) and the third argument is a platform1.2 image (Such as Asuka or Caroline)
