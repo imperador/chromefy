@@ -61,14 +61,6 @@ function cp_ext {
 
 function cp_ext_nodup {
     if [ -x "$(command -v rsync)" ]; then
-    	rsync --info=progress2 --ignore-existing -ah "$@"
-    else
-	cp -nav "$@"
-    fi
-}
-
-function cp_ext_nodup {
-    if [ -x "$(command -v rsync)" ]; then
 	rsync --info=progress2 --ignore-existing -ah "$@"
     else
 	cp -nav "$@"
