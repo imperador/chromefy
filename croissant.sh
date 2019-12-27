@@ -293,7 +293,7 @@ fi
 
 #Fix for TPM2 images (must pass third parameter) (TPM emulation method)
 if [ "$flag_vtpm" = true ]; then
-    "Copying TPM 2 emulator..."
+    echo "Copying TPM 2 emulator..."
     cp -a /home/chronos/RAW/swtpm/usr/sbin/* /home/chronos/local/usr/sbin
     cp -a /home/chronos/RAW/swtpm/usr/lib64/* /home/chronos/local/usr/lib64
     
