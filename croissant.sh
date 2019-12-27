@@ -51,6 +51,30 @@ function read_choice {
     done
 }
 
+function cp_ext {
+    if [ -x "$(command -v rsync)" ]; then
+    	rsync --info=progress2 -ah "$@"
+    else
+	cp -av "$@"
+    fi
+}
+
+function cp_ext_nodup {
+    if [ -x "$(command -v rsync)" ]; then
+    	rsync --info=progress2 --ignore-existing -ah "$@"
+    else
+	cp -nav "$@"
+    fi
+}
+
+function cp_ext_nodup {
+    if [ -x "$(command -v rsync)" ]; then
+	rsync --info=progress2 --ignore-existing -ah "$@"
+    else
+	cp -nav "$@"
+    fi
+}
+
 #Checks if images are valid and mounts them
 if [ "$flag_image" = true ]; then
     chromium_image=`losetup --show -fP "$1"`
@@ -122,8 +146,9 @@ if [ "$choice" = false ]; then
     chromium_root_dir="/home/chronos/RAW"
     flag_linux=false
     mkdir -p /home/chronos/RAW/usr/lib64
-    cp -av /home/chronos/local/{lib,boot} /home/chronos/RAW/
-    cp -av /home/chronos/local/usr/lib64/{dri,va} /home/chronos/RAW/usr/lib64/
+    echo "Backing up kernel modules..."
+    cp_ext /home/chronos/local/{lib,boot} /home/chronos/RAW/
+    cp_ext /home/chronos/local/usr/lib64/{dri,va} /home/chronos/RAW/usr/lib64/
     if [ ! $? -eq 0 ]; then echo "Error while copying ChromiumOS files locally (insufficent disk space?)"; abort_chromefy; fi
 fi
 umount /home/chronos/local 2>/dev/null
@@ -183,14 +208,16 @@ else
 fi
 
 #Copies all ChromeOS system files
-cp -av /home/chronos/image/* /home/chronos/local
+echo "Copying ChromeOS system files..."
+cp_ext /home/chronos/image/* /home/chronos/local
 umount /home/chronos/image
 
 #Copies modules and certificates from ChromiumOS
 rm -rf /home/chronos/local/lib/firmware
 rm -rf /home/chronos/local/lib/modules/ 
-cp -av "$chromium_root_dir"/{lib,boot} /home/chronos/local/
-cp -nav "$chromium_root_dir"/usr/lib64/{dri,va} /home/chronos/local/usr/lib64/ #Extra GPU drivers
+echo "Copying kernel modules..."
+cp_ext "$chromium_root_dir"/{lib,boot} /home/chronos/local/
+cp_ext_nodup "$chromium_root_dir"/usr/lib64/{dri,va} /home/chronos/local/usr/lib64/ #Extra GPU drivers
 rm -rf /home/chronos/local/etc/modprobe.d/alsa*.conf
 
 echo "Is your wireless card bcm43xx? Answer no if unsure (y/n)"
@@ -248,33 +275,35 @@ if [ "$choice" = false ]; then sed '0,/enforcing/s/enforcing/permissive/' -i /ho
 
 #Fix for TPM2 images (must pass third parameter) (TPM replacement method)
 if [ "$flag_tpm1" = true ]; then
-	#Remove TPM 2.0 services
-	rm -rf /home/chronos/local/etc/init/{attestationd,cr50-metrics,cr50-result,cr50-update,tpm_managerd,trunksd,u2fd}.conf
+    #Remove TPM 2.0 services
+    rm -rf /home/chronos/local/etc/init/{attestationd,cr50-metrics,cr50-result,cr50-update,tpm_managerd,trunksd,u2fd}.conf
 
-	#Copy TPM 1.2 file from tpm1image
-	cp -av /home/chronos/tpm1image/etc/init/{chapsd,cryptohomed,cryptohomed-client,tcsd,tpm-probe}.conf /home/chronos/local/etc/init/
-	cp -av /home/chronos/tpm1image/etc/tcsd.conf /home/chronos/local/etc/
-	cp -av /home/chronos/tpm1image/usr/bin/{tpmc,chaps_client} /home/chronos/local/usr/bin/
-	cp -av /home/chronos/tpm1image/usr/lib64/libtspi.so{,.1{,.2.0}} /home/chronos/local/usr/lib64/
-	cp -av /home/chronos/tpm1image/usr/sbin/{chapsd,cryptohome,cryptohomed,cryptohome-path,tcsd} /home/chronos/local/usr/sbin/
-	cp -av /home/chronos/tpm1image/usr/share/cros/init/{tcsd-pre-start,chapsd}.sh /home/chronos/local/usr/share/cros/init/
-    cp -av /home/chronos/tpm1image/etc/dbus-1/system.d/{Cryptohome,org.chromium.Chaps}.conf /home/chronos/local/etc/dbus-1/system.d/
+    #Copy TPM 1.2 file from tpm1image
+    echo "Copying TPM 1.2 files..."
+    cp -a /home/chronos/tpm1image/etc/init/{chapsd,cryptohomed,cryptohomed-client,tcsd,tpm-probe}.conf /home/chronos/local/etc/init/
+    cp -a /home/chronos/tpm1image/etc/tcsd.conf /home/chronos/local/etc/
+    cp -a /home/chronos/tpm1image/usr/bin/{tpmc,chaps_client} /home/chronos/local/usr/bin/
+    cp -a /home/chronos/tpm1image/usr/lib64/libtspi.so{,.1{,.2.0}} /home/chronos/local/usr/lib64/
+    cp -a /home/chronos/tpm1image/usr/sbin/{chapsd,cryptohome,cryptohomed,cryptohome-path,tcsd} /home/chronos/local/usr/sbin/
+    cp -a /home/chronos/tpm1image/usr/share/cros/init/{tcsd-pre-start,chapsd}.sh /home/chronos/local/usr/share/cros/init/
+    cp -a /home/chronos/tpm1image/etc/dbus-1/system.d/{Cryptohome,org.chromium.Chaps}.conf /home/chronos/local/etc/dbus-1/system.d/
     if [ ! -f /home/chronos/local/usr/lib64/libecryptfs.so ] && [ -f /home/chronos/tpm1image/usr/lib64/libecryptfs.so ]; then
-        cp -av /home/chronos/tpm1image/usr/lib64/libecryptfs* /home/chronos/local/usr/lib64/
-        cp -av /home/chronos/tpm1image/usr/lib64/ecryptfs /home/chronos/local/usr/lib64/
+        cp -a /home/chronos/tpm1image/usr/lib64/libecryptfs* /home/chronos/local/usr/lib64/
+        cp -a /home/chronos/tpm1image/usr/lib64/ecryptfs /home/chronos/local/usr/lib64/
     fi
 
-	#Add tss user and group
-	echo 'tss:!:207:root,chaps,attestation,tpm_manager,trunks,bootlockboxd' | tee -a /home/chronos/local/etc/group
-	echo 'tss:!:207:207:trousers, TPM and TSS operations:/var/lib/tpm:/bin/false' | tee -a /home/chronos/local/etc/passwd
+    #Add tss user and group
+    echo 'tss:!:207:root,chaps,attestation,tpm_manager,trunks,bootlockboxd' | tee -a /home/chronos/local/etc/group
+    echo 'tss:!:207:207:trousers, TPM and TSS operations:/var/lib/tpm:/bin/false' | tee -a /home/chronos/local/etc/passwd
     
     umount /home/chronos/tpm1image
 fi
 
 #Fix for TPM2 images (must pass third parameter) (TPM emulation method)
 if [ "$flag_vtpm" = true ]; then
-    cp -av /home/chronos/RAW/swtpm/usr/sbin/* /home/chronos/local/usr/sbin
-    cp -av /home/chronos/RAW/swtpm/usr/lib64/* /home/chronos/local/usr/lib64
+    "Copying TPM 2 emulator..."
+    cp -a /home/chronos/RAW/swtpm/usr/sbin/* /home/chronos/local/usr/sbin
+    cp -a /home/chronos/RAW/swtpm/usr/lib64/* /home/chronos/local/usr/lib64
     
     cd /home/chronos/local/usr/lib64
     ln -s libswtpm_libtpms.so.0.0.0 libswtpm_libtpms.so.0
