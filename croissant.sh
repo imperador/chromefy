@@ -268,7 +268,7 @@ SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHPAD}=="1",    ATTRS{name}=="bcm5974",  ENV
 EOF
 fi
 
-echo; echo "Leave selinux on enforcing? (Won't break SafetyNet without developer mode, but might cause issues with android apps)"
+echo; echo "Leave selinux on enforcing? (Won't break SafetyNet without developer mode, but might cause issues with Android apps)"
 echo "Answer no if unsure (y/n)"
 read_choice
 if [ "$choice" = false ]; then sed '0,/enforcing/s/enforcing/permissive/' -i /home/chronos/local/etc/selinux/config; fi
@@ -350,7 +350,7 @@ tmp_esp_size="$(grep 'PARTITION_SIZE_EFI_SYSTEM' /home/chronos/local/usr/sbin/wr
 esp_size="${tmp_esp_size#*=}"
 sed -i "s/$esp_size/536870912/g" /home/chronos/local/usr/sbin/write_gpt.sh
 
-#Expose the internal camera to android container
+#Expose the internal camera to Android container
 internal_camera=`dmesg | grep uvcvideo -m 1 | awk -F '[()]' '{print $2}'`
 original_camera=`sed -nr 's,^camera0.module0.usb_vid_pid=(.*),\1,p'  /home/chronos/local/etc/camera/camera_characteristics.conf`
 if [ ! -z $internal_camera ] && [ ! -z $original_camera ]
@@ -364,5 +364,5 @@ echo
 if [ "$flag_image" = false ]; then
     echo "ChromeOS installed, you can now reboot"
 else 
-    echo "ChromeOS image created: this is for personal use only, distribute at your own risk"
+    echo "ChromeOS image has been already created. There are no warranties from Project Croissant participants. Distribute and install it for your own risk. Notice that this image currently doesn't support PC's with non-Intel CPU's and GPU's."
 fi
