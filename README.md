@@ -1,3 +1,5 @@
+This project is not regularly maintained anymore. We suggest you to use [Brunch Framework](https://github.com/sebanc/brunch) instead
+
 # Project Croissant
 Transforming Chromium to Chrome
 
